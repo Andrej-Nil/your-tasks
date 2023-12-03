@@ -1,13 +1,7 @@
-<!doctype html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Your Tasks</title>
-</head>
-<body>
-    Your Tasks
-</body>
-</html>
+<?php require  '../app/views/incs/header.tpl.php' ?>
+
+  <div class="wrapper">
+    content
+  </div>
+
+<?php require  '../app/views/incs/footer.tpl.php' ?>
