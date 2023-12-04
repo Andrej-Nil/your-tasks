@@ -1,7 +1,3 @@
-<?php require  '../app/views/incs/header.tpl.php' ?>
+<?php
 
-  <div class="wrapper">
-    content
-  </div>
-
-<?php require  '../app/views/incs/footer.tpl.php' ?>
+require_once '../app/views/home.tpl.php';

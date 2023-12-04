@@ -1,0 +1,16 @@
+.nav{
+  display: flex;
+  gap: 20px;
+}
+
+.nav__item{
+  position: relative;
+  font-weight: 500;
+  color: #999;
+  transition: color 0.2s ease-in-out;
+
+  &:hover{
+    color: #222;
+  }
+
+}
