@@ -5,23 +5,22 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <base href="<?= PATH ?>/">
+    <link rel="stylesheet" href="assets/css/style.css">
     <title>Your Tasks</title>
 </head>
 <body>
 
 <div class="app">
-
-
     <header class="header">
         <div class="container">
             <div class="header__inner">
                 <a href="/" class="header__logo logo">
-                    <img src="../assets/img/logo.svg" alt="" class="logo__img">
+                    <img src="assets/img/logo.svg" alt="" class="logo__img">
                 </a>
 
                 <nav class="header__nav nav">
-                    <a href="/" class="nav__item">Задачи</a>
+                    <a href="tasks" class="nav__item">Задачи</a>
                     <a href="/" class="nav__item">Добавить</a>
                     <a href="/" class="nav__item">Настройки</a>
                 </nav>
