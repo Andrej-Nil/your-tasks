@@ -6,7 +6,6 @@ class Db
 
     public function __construct(array $db_config){
         $dns = "mysql:host={$db_config['host']};dbname={$db_config['dbname']};charset={$db_config['charset']}";
-
         try {
             $this->conn = new PDO($dns, $db_config['username'], $db_config['password'], $db_config['options']);
         }catch (PDOException $e){
