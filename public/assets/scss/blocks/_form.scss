@@ -1,5 +1,52 @@
 .form{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
   background: #fff;
   padding: 15px;
   border-radius: 5px;
+}
+
+.form__row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+}
+
+.form__controls{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form__bottom{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form__link{
+  font-size: 14px;
+  font-weight: 500;
+  color: #0000ff;
+  &:hover{
+    text-decoration: underline;
+  }
+}
+
+.form__lost{
+  font-size: 14px;
+  font-weight: 500;
+  color: #ff0000;
+  margin-left: auto;
+  &:hover{
+    text-decoration: underline;
+  }
+
+}
+
+.form-btn{
+  margin-left: auto;
 }

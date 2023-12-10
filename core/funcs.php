@@ -21,15 +21,21 @@ function abort($code = '404'){
 
 function timeLeft($endTime)
 {
-    $difference = getDifferenceTime(date("Y-m-d"), $endTime);
-    if ($difference->days === 0) {
-        return 'Сегодня';
-    }elseif ($difference->invert){
-        return "Просрочено на {$difference->days}";
-    } else {
-        return $difference->days;
 
+    if($endTime){
+        $difference = getDifferenceTime(date("Y-m-d"), $endTime);
+        if ($difference->days === 0) {
+        return 'Сегодня';
+        }elseif ($difference->invert){
+            return "Просрочено на {$difference->days}";
+        } else {
+            return $difference->days;
+        }
+    }else{
+        return 'Не указано';
     }
+//
+
 }
 
     function getDifferenceTime($start, $end){
@@ -40,12 +46,15 @@ function timeLeft($endTime)
 
 
 function getTaskStatusCls($task) {
-    $status = $task['status'];
-    $difference = getDifferenceTime($task['date'], $task['deadline']);
-    if($difference->invert){
-        return 'expired';
+    if($task['deadline']) {
+        $difference = getDifferenceTime(date("Y-m-d"), $task['deadline']);
+        if ($difference->invert) {
+            return 'expired';
+        }
     }
-    return $status;
+    return $task['status'];
+
+
 }
 
 function getTaskStatusWord($status) {

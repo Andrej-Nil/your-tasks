@@ -1,0 +1,18 @@
+.control{
+
+}
+
+.control__label{
+  margin-bottom: 10px;
+  display: block;
+}
+
+.control__input{
+  margin-bottom: 3px;
+}
+
+.control__error{
+  font-size: 12px;
+  font-weight: 500;
+  color: #ff0000;
+}

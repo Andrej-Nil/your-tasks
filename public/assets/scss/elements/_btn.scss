@@ -1,0 +1,24 @@
+.btn{
+  font-family: 'Roboto', sans-serif;
+  outline: none;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 5px 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: 0.2s ease-in-out;
+  &:hover{
+    background: #dfdfdf;
+  }
+
+  &.btn--action{
+    background: #5555ff;
+    color: #fff;
+    &:hover{
+      background: #8888ff;
+    }
+  }
+}
+
