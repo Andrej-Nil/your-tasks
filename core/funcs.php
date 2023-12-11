@@ -34,7 +34,6 @@ function timeLeft($endTime)
     }else{
         return 'Не указано';
     }
-//
 
 }
 
@@ -46,6 +45,12 @@ function timeLeft($endTime)
 
 
 function getTaskStatusCls($task) {
+    if($task['status'] === 'cancelled') {
+        return $task['status'];
+    }
+    if($task['status'] === 'completed') {
+        return $task['status'];
+    }
     if($task['deadline']) {
         $difference = getDifferenceTime(date("Y-m-d"), $task['deadline']);
         if ($difference->invert) {
@@ -53,7 +58,6 @@ function getTaskStatusCls($task) {
         }
     }
     return $task['status'];
-
 
 }
 

@@ -1,4 +1,4 @@
 <?php
 
 
-require VIEWS . '/task/create.tpl.php';
+require_once VIEWS . '/task/create.tpl.php';

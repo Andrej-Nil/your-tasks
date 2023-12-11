@@ -25,12 +25,18 @@
     background: #ffffcc;
   }
   &.progress{
-    background: #ccffff;
+    background: #fff;
   }
   &.cancelled{
     background: #cccccc;
   }
 
+}
+
+.task-card__link{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .task-card__data{
