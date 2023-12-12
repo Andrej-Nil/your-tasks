@@ -25,7 +25,7 @@ function timeLeft($endTime)
     if($endTime){
         $difference = getDifferenceTime(date("Y-m-d"), $endTime);
         if ($difference->days === 0) {
-        return 'Сегодня';
+        return "Сегодня";
         }elseif ($difference->invert){
             return "Просрочено на {$difference->days}";
         } else {

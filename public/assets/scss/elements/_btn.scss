@@ -15,11 +15,62 @@
   }
 
   &.btn--action{
-    background: #5555ff;
+    background: #004eff;
+
+    border: 1px solid #2163ff;;
+
     color: #fff;
     &:hover{
-      background: #8888ff;
+      background: #2a68fd;
+      border: 1px solid #2163ff;;
     }
+  }
+
+
+  &.btn--error{
+    background: #c01d1d;
+    border: 1px solid #c01d1d;
+    color: #fff;
+    &:hover{
+      background: #e02e2e;
+      border: 1px solid #e02e2e;
+    }
+  }
+
+  &.btn--cancel{
+    background: #838383;
+    border: 1px solid #838383;
+    color: #fff;
+    &:hover{
+      background: #a2a2a2;
+      border: 1px solid #a2a2a2;
+    }
+  }
+
+  &.btn--success{
+    background: #34a912;
+    border: 1px solid #34a912;
+    color: #fff;
+    &:hover{
+      background: #49c424;
+      border: 1px solid #49c424;
+    }
+  }
+
+  &.btn--warning{
+    background: #ef9825;
+    border: 1px solid #ef9825;
+    color: #fff;
+    &:hover{
+      background: #ffa83d;
+      border: 1px solid #ffa83d;
+    }
+  }
+
+  &.btn--icon{
+    padding: 5px;
+    width: 34px;
+    height: 34px;
   }
 }
 
