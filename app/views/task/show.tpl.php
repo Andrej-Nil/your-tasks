@@ -8,15 +8,16 @@
             <main class="main">
                <div class="task">
 
-                   <h1 class="task__title"><?= $task['title'] ?></h1>
-                   <p class="task__date">от <?= $task['date'] ?></p>
+                   <h1 class="task__title"><?= h($task['title']) ?></h1>
+                   <p class="task__date">от <?= $task['date_creating'] ?></p>
                    <div class="task__inner">
 
 
                    <div class="task__content">
 
-
-                       <p class="task__desc"><?= $task['description'] ?></p>
+                    <?php if ($task['description']): ?>
+                       <p class="task__desc"><?= h($task['description']) ?></p>
+                    <?php endif; ?>
                        <div class="task__info">
                             <div class="task-row">
                                 <span class="task-row__label">Статус:</span>

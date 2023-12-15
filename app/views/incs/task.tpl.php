@@ -1,8 +1,10 @@
 <div class="task-card <?= getTaskStatusCls($task) ?>">
     <a href="task/show?id=<?=$task['id'] ?>" class="task-card__link">
-        <p class="task-card__data">от <?= $task['date'] ?></p>
-        <p class="task-card__title"><?= $task['title'] ?></p>
-        <p class="task-card__desc"><?= $task['description'] ?></p>
+        <p class="task-card__data">от <?= $task['date_creating'] ?></p>
+        <p class="task-card__title"><?= h($task['title']) ?></p>
+        <?php if ($task['description']): ?>
+            <p class="task-card__desc"><?= h($task['description']) ?></p>
+        <?php endif; ?>
         <div class="task-card__info">
             <div class="task-card-row">
                   <span class="task-card-row__label">
