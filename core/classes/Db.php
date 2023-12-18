@@ -1,5 +1,10 @@
 <?php
 
+namespace classes;
+use PDO;
+use PDOException;
+//use PDOStatement;
+
 final class Db
 {
     private $connection;

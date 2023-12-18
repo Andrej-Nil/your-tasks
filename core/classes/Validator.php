@@ -1,6 +1,6 @@
 <?php
 
-
+namespace classes;
 
 class Validator
 {
@@ -19,7 +19,7 @@ class Validator
     public function validate($data = [], $rules = []){
 
         foreach ($data as $fieldname => $value) {
-            if(in_array($fieldname, array_keys($rules) )) {
+            if(isset($rules[$fieldname])) {
                 $this->check([
                     'fieldname' => $fieldname,
                     'value' => $value,
@@ -63,6 +63,20 @@ class Validator
 
     public function hasErrors(){
         return !empty($this->errors);
+    }
+
+
+    public function listErrors($fieldname){
+        $output = '';
+        if(isset($this->errors[$fieldname])){
+            $output .=  "<div class='control__messages'>";
+               foreach ($this->errors[$fieldname] as $error){
+                  $output .= "<p class='control__error'>{$error}</p>";
+               }
+            $output .=  "</div>";
+        }
+        return $output;
+
     }
 
     protected function required($value, $rule_value) {

@@ -111,3 +111,20 @@ function redirect($url = ''){
     die;
 }
 
+function  getAlerts(){
+    if(!empty($_SESSION['success'])){
+       $text = $_SESSION['success'];
+       $cls = 'alert--success';
+       require_once VIEWS . '/incs/alert.tpl.php';
+       unset($_SESSION['success']);
+
+
+    }elseif(!empty($_SESSION['error'])){
+        $text = $_SESSION['error'];
+        $cls = 'alert--error';
+        require_once VIEWS . '/incs/alert.tpl.php';
+        unset($_SESSION['error']);
+
+    }
+}
+

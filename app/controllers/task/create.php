@@ -1,6 +1,8 @@
 <?php
 
-require_once CORE . '/classes/Validator.php';
+//require_once CORE . '/classes/Validator.php';
+use classes\Validator;
+
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $fillable = ['title', 'description', 'deadline'];
@@ -35,39 +37,24 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 
 
-   if($validation->hasErrors()){
-       print_arr($validation->getErrors());
-   }else{
-       echo 'SUCCESS';
-   };
+   if(!$validation->hasErrors()){
 
-    die;
+           $res = $db->query(
+               "INSERT INTO tasks (`title`, `description`, `status`, `date_creating`, `deadline`) VALUES (?,?,?,?,?)",
+               $values
+           );
 
-//
+           if($res){
+               $_SESSION['success'] = "Success";
+           } else {
+               $_SESSION['error'] = "Db error";
 
-//    if(empty($data['title'])){
-//        $errors['title'] = "Поле 'название' обязательно!";
-//    }
+           }
 
-//dd($values);
-    if(empty($errors)){
-        $res = $db->query(
-            "INSERT INTO tasks (`title`, `description`, `status`, `date_creating`, `deadline`) VALUES (?,?,?,?,?)",
-            $values
-        );
+           redirect();
+   }
 
-        if($res){
-            echo 'OK';
-//            $_SESSION['success'];
-        } else {
-            echo 'ERROR';
-        }
-//        redirect('task/create');
-    }
-    require_once VIEWS . '/task/create.tpl.php';
 }
 
-if($_SERVER['REQUEST_METHOD'] === 'GET') {
-    require_once VIEWS . '/task/create.tpl.php';
-}
+require_once VIEWS . '/task/create.tpl.php';
 

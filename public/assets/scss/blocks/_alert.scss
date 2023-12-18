@@ -1,0 +1,12 @@
+.alert{
+  padding: 10px;
+  background: #fff;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  &--success{
+    background: #ccffcc;
+  }
+  &--error{
+     background: #ffcccc;
+   }
+}

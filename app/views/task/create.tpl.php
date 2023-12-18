@@ -1,6 +1,8 @@
 <?php require VIEWS . '/incs/header.tpl.php' ?>
 
+
     <div class="wrapper small-container">
+        <?php getAlerts(); ?>
         <h1 class="main-title">Новая задача</h1>
         <div class="content">
 
@@ -10,9 +12,7 @@
                         <div class="control">
                             <label class="control__label" for="title">Название</label>
                             <input id="title" type="text" name="title" class="control__input input" value="<?=  old('title') ?>" autofocus>
-                            <?php if(isset($errors['title'])): ?>
-                            <span class="control__error"><?= $errors['title'] ?></span>
-                            <?php endif ?>
+                            <?= isset($validation) ? $validation->listErrors('title') : '' ?>
                         </div>
 
                         <div class="control">
@@ -23,9 +23,7 @@
                       <div class="control">
                         <label class="control__label" for="deadline">Дата сдачи</label>
                         <input id="deadline" type="date" name="deadline" class="control__input input" value="<?= old('deadline') ?>">
-                          <?php if(isset($errors['deadline'])): ?>
-                              <span class="control__error"><?= $errors['deadline'] ?></span>
-                          <?php endif ?>
+                          <?= isset($validation) ? $validation->listErrors('deadline') : '' ?>
                       </div>
                     </div>
 
