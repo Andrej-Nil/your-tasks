@@ -2,12 +2,11 @@
 
 
     <div class="wrapper small-container">
-        <?php getAlerts(); ?>
         <h1 class="main-title">Новая задача</h1>
         <div class="content">
 
             <main class="main">
-                <form class="form" action="task/create" method="post">
+                <form class="form" action="/tasks" method="post">
                     <div class="form__controls">
                         <div class="control">
                             <label class="control__label" for="title">Название</label>

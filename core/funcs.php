@@ -128,3 +128,11 @@ function  getAlerts(){
     }
 }
 
+function db(): \classes\Db{
+    return \classes\App::get(\classes\Db::class);
+}
+
+function check_auth(){
+    return isset($_SESSION['user']);
+}
+

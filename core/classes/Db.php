@@ -23,6 +23,9 @@ final class Db
 
 
     public function getConnection(array $db_config){
+        if($this->connection instanceof PDO){
+            return $this;
+        }
         $dns = "mysql:host={$db_config['host']};dbname={$db_config['dbname']};charset={$db_config['charset']}";
         try {
             $this->connection = new PDO($dns, $db_config['username'], $db_config['password'], $db_config['options']);
@@ -60,6 +63,10 @@ final class Db
             abort();
         }
         return $res;
+    }
+
+    public function rowCount(){
+        return $this->stmt->rowCount();
     }
 
 }

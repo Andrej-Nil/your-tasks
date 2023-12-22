@@ -20,15 +20,21 @@
                 </a>
 
                 <nav class="header__nav nav">
-                    <a href="task" class="nav__item">Задачи</a>
-                    <a href="task/create" class="nav__item">Добавить</a>
+                    <a href="tasks" class="nav__item">Задачи</a>
+                    <a href="tasks/create" class="nav__item">Добавить</a>
                     <a href="/" class="nav__item">Настройки</a>
                 </nav>
 
                 <div class="header__menu menu nav">
-                    <a href="login" class="menu__item nav__item">Вход</a>
-                    <a href="register" class="menu__item nav__item">Регистрация</a>
 
+                    <?php if(check_auth()): ?>
+                        <a  class="menu__item nav__item"><?= $user['name'] ?></a>
+                        <a href="logout" class="menu__item nav__item">Выход</a>
+                    <?php else: ?>
+                        <a href="login" class="menu__item nav__item">Вход</a>
+                        <a href="register" class="menu__item nav__item">Регистрация</a>
+
+                    <?php endif; ?>
 <!--                    <a href="/" class="menu__item nav__item">Андрей</a>-->
 <!--                    <a href="/" class="menu__item nav__item">Выход</a>-->
 
@@ -36,4 +42,4 @@
             </div>
         </div>
     </header>
-
+    <?php getAlerts(); ?>

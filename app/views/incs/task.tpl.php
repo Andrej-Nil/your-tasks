@@ -1,5 +1,5 @@
 <div class="task-card <?= getTaskStatusCls($task) ?>">
-    <a href="task/show?id=<?=$task['id'] ?>" class="task-card__link">
+    <a href="tasks/show?id=<?=$task['id'] ?>" class="task-card__link">
         <p class="task-card__data">от <?= $task['date_creating'] ?></p>
         <p class="task-card__title"><?= h($task['title']) ?></p>
         <?php if ($task['description']): ?>

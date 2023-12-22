@@ -67,11 +67,16 @@
 
                    </div>
                    <div class="task__bottom">
-                       <a href="!#" class="btn btn--error">Удалить</a>
-
+<!--                       <a href="!#" class="btn btn--error">Удалить</a>-->
+                       <form action="/tasks" method="post">
+                           <input type="hidden" name="id" value="<?=$task['id'] ?>">
+                           <input type="hidden" name="_method" value="delete">
+                           <button type="submit" class="btn btn--error">Удалить</button>
+                       </form>
                         <?php if($task['status'] === 'cancelled'): ?>
                             <a href="!#" class="btn btn--action">Вернуть</a>
                        <?php elseif ($task['status'] !== 'completed' ): ?>
+
                             <a href="!#" class="btn btn--cancel">Отменить</a>
                         <?php endif ?>
                    </div>

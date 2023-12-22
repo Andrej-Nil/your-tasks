@@ -1,38 +1,47 @@
 <?php
-//
-//if($_SERVER['REQUEST_METHOD'] === 'POST'){
-//    $fillable = ['title', 'description', 'deadline'];
-//    $data = load($fillable);
-//    $createDate = date('Y-m-d');
-//    $difference = getDifferenceTime($createDate, $data['deadline']);
-//    $values = [
-//        $data['title'],
-//        $data['description'],
-//        'progress',
-//        $createDate,
-//        $data['deadline'],
-//    ];
-//
-//
-//
-//    $errors = [];
-//
-//    if(empty(trim($data['title']))){
-//        $errors['title'] = "Поле 'название' обязательно!";
-//    }
-//
-//    if($difference->invert > 0){
-//        $errors['deadline'] = "Дата здачи не может быть раньше даты создания!";
-//    }
-//
-//    if(empty($errors)){
-//        $db->query(
-//            "INSERT INTO tasks (`title`, `description`, `status`, `date_creating`, `deadline`) VALUES (?,?,?,?,?)",
-//            $values
-//        );
-//    } else {
-//
-//    }
-//    require_once VIEWS . '/task/create.tpl.php';
-//}
-//
+$db = \classes\App::get(\classes\Db::class);
+$validator = \classes\App::get(\classes\Validator::class);
+//dd($validator);
+$fillable = ['title', 'description', 'deadline'];
+$createDate = date('Y-m-d');
+
+$data = load($fillable);
+$values = [
+    $data['title'],
+    $data['description'],
+    'progress',
+    $createDate,
+    $data['deadline'] ?: null,
+];
+
+
+$validation = $validator->validate($data, [
+    "title" => [
+        'required' => true,
+        'min' => 5,
+        'max' => 190
+    ],
+    "deadline" => [
+        'required' => false,
+        'relevance' => $createDate
+    ]
+]);
+
+
+if (!$validation->hasErrors()) {
+
+    $res = $db->query(
+        "INSERT INTO tasks (`title`, `description`, `status`, `date_creating`, `deadline`) VALUES (?,?,?,?,?)",
+        $values
+    );
+
+    if ($res) {
+        $_SESSION['success'] = "Задача успешно добавлена";
+    } else {
+        $_SESSION['error'] = "Произошла ошибка, задача не добавлена";
+    }
+
+    redirect('/');
+} else {
+    require_once VIEWS . '/task/create.tpl.php';
+}

@@ -1,12 +1,33 @@
 <?php
 
-$routes = [
-    '' => 'index.php',
-    'login' => '/user/login.php',
-    'register' => '/user/register.php',
+$router->get('', 'index.php')->only('auth');
 
-    'task' => '/task/index.php',
-    'task/create' => '/task/create.php',
-//    'task/store' => '/task/create.php',
-    'task/show' => '/task/show.php',
-];
+// Tasks routes
+$router->get('tasks/create', 'task/create.php')->only('auth');
+$router->post('tasks', 'task/store.php')->only('auth');
+$router->get('tasks', 'task/index.php')->only('auth');
+$router->get('tasks/show', 'task/show.php')->only('auth');
+$router->delete('tasks', 'task/destroy.php')->only('auth');
+$router->put('tasks', 'task/update.php')->only('auth');
+
+// user
+$router->get('user/show', 'user/show.php')->only('auth');
+
+$router->get('register', 'user/register.php')->only('guest');
+$router->post('register', 'user/store.php')->only('guest');
+
+$router->get('login', 'user/login.php')->only('guest');
+$router->post('login', 'user/login.php')->only('guest');
+$router->get('logout', 'user/logout.php')->only('auth');
+
+dump($router->routes);
+//$routes = [
+//    '' => 'show.php',
+//    'login' => '/user/login.php',
+//    'register' => '/user/register.php',
+//
+//    'task' => '/task/show.php',
+//    'task/create' => '/task/create.php',
+////    'task/store' => '/task/create.php',
+//    'task/show' => '/task/show.php',
+//];

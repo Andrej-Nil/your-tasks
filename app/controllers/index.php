@@ -1,7 +1,6 @@
 <?php
-
-//$tasks = $db->query("SELECT * FROM `tasks`")->fetchAll();
+$db = \classes\App::get(\classes\Db::class);
 $tasks = $db->query("SELECT * FROM `tasks` WHERE `status` NOT IN ('completed', 'cancelled')")->findAll();
-//dd($tasks);
+
 require_once VIEWS . '/home.tpl.php';
 

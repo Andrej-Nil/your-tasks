@@ -5,19 +5,21 @@ namespace classes;
 class Validator
 {
     protected $errors = [];
-    protected $rules_list = ['required', 'min', 'max', 'relevance', 'email'];
+    protected $rules_list = ['required', 'min', 'max', 'relevance', 'email', 'match'];
+    protected $data_items;
     protected $messages = [
         'required' => 'Поле :fieldname: обязательное',
         'min' => 'Минимальная длина :fieldname: :rulevalue: символов',
         'max' => 'Максимальная длина :fieldname: :rulevalue: символов',
         'relevance' => 'Дата сдачи не может быть прошедшим число',
-        'email' => 'Почта указано некорректно'
+        'email' => 'Почта указано некорректно',
+        'match' => 'Пароль не совподает'
     ];
 
 
 
     public function validate($data = [], $rules = []){
-
+        $this->data_items = $data;
         foreach ($data as $fieldname => $value) {
             if(isset($rules[$fieldname])) {
                 $this->check([
@@ -103,6 +105,10 @@ class Validator
 
     protected function email($value, $rule_value) {
         return filter_var($value, FILTER_VALIDATE_EMAIL);
+    }
+
+    protected function match($value, $rule_value) {
+        return $value === $this->data_items([$rule_value]);
     }
 
 
