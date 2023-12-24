@@ -1,7 +1,8 @@
 {
   "autoload": {
     "psr-4": {
-      "classes\\": "core/classes"
+      "classes\\": "core/classes",
+      "middleware\\": "core/middleware"
     },
     "require": {}
   }

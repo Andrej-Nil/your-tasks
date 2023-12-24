@@ -60,7 +60,7 @@
                            </a>
                        <?php endif ?>
 
-                       <a href="!#" class="btn btn--icon">
+                       <a href="/tasks/edit?id=<?=$task['id']?>" class="btn btn--icon">
                            <img class="btn__icon" src="../assets/img/icons/settings.svg" alt="">
                        </a>
                    </div>

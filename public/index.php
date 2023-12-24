@@ -8,7 +8,7 @@ require_once __DIR__ . '/boostrap.php';
 require CORE . '/funcs.php';
 
 
-$user = $_SESSION['user'];
+
 $router = new Router();
 
 require_once CONFIG . '/routes.php';

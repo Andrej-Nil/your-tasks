@@ -1,6 +1,4 @@
 <?php require VIEWS . '/incs/header.tpl.php' ?>
-
-
     <div class="wrapper small-container">
         <h1 class="main-title">Новая задача</h1>
         <div class="content">

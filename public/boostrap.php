@@ -12,7 +12,6 @@ $container->setServices(Db::class, function () {
 });
 
 $container->setServices(Validator::class, function () {
-//    $db_config = require CONFIG . '/validator.php';
     return new Validator();
 });
 

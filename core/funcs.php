@@ -136,3 +136,7 @@ function check_auth(){
     return isset($_SESSION['user']);
 }
 
+function title($title = ''){
+    return "Your Tasks - " . $title;
+}
+

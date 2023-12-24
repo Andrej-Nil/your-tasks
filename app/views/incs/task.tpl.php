@@ -1,4 +1,4 @@
-<div class="task-card <?= getTaskStatusCls($task) ?>">
+<div data-task="<?= $task['id'] ?>" class="task-card <?= getTaskStatusCls($task) ?>">
     <a href="tasks/show?id=<?=$task['id'] ?>" class="task-card__link">
         <p class="task-card__data">от <?= $task['date_creating'] ?></p>
         <p class="task-card__title"><?= h($task['title']) ?></p>
@@ -48,22 +48,22 @@
     </a>
         <div class="task-card__panel">
             <?php if($task['status'] === 'progress'): ?>
-            <a href="!#" class="btn btn--icon">
+            <button task-status="progress" class="btn btn--icon">
                 <img class="btn__icon" src="../assets/img/icons/pause.svg" alt="">
-            </a>
+            </button>
             <?php elseif($task['status'] === 'pause'): ?>
-                <a href="!#" class="btn btn--icon">
+                <button task-status="progress" class="btn btn--icon">
                     <img class="btn__icon" src="../assets/img/icons/play.svg" alt="">
-                </a>
+                </button>
             <?php endif ?>
 
             <?php if($task['status'] !== 'completed' && $task['status'] !== 'canceled'): ?>
-                <a href="!#" class="btn btn--icon">
+                <button task-status="complete" class="btn btn--icon">
                     <img class="btn__icon" src="../assets/img/icons/check.svg" alt="">
-                </a>
+                </button>
             <?php endif ?>
 
-            <a href="!#" class="btn btn--icon">
+            <a href="/tasks/edit?id=<?=$task['id']?>" class="btn btn--icon">
                 <img class="btn__icon" src="../assets/img/icons/settings.svg" alt="">
             </a>
         </div>

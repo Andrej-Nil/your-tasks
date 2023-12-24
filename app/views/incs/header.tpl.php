@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <base href="<?= PATH ?>/">
     <link rel="stylesheet" href="assets/css/style.css">
-    <title>Your Tasks</title>
+    <title><?= $title ?></title>
 </head>
 <body>
 
@@ -28,7 +28,7 @@
                 <div class="header__menu menu nav">
 
                     <?php if(check_auth()): ?>
-                        <a  class="menu__item nav__item"><?= $user['name'] ?></a>
+                        <a  class="menu__item nav__item"><?= $_SESSION['user']['name'] ?></a>
                         <a href="logout" class="menu__item nav__item">Выход</a>
                     <?php else: ?>
                         <a href="login" class="menu__item nav__item">Вход</a>

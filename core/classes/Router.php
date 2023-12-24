@@ -34,17 +34,27 @@ class Router
         foreach ($this->routes as $route) {
             if(($route['uri'] === $this->uri) && ($route['method'] === strtoupper($this->method))) {
 
-                if($route['middleware'] === 'guest'){
-                    if(check_auth()){
-                        redirect('/');
-                    }
-                }
 
-                if($route['middleware'] === 'auth'){
-                    if(!check_auth()){
-                        redirect('/register');
+                if($route['middleware']){
+                    $middleware = MIDDLEWARE[$route['middleware']] ?? false;
+
+                    if(!$middleware){
+                        throw new \Exception("Incorrect middleware {$route['middleware']}");
                     }
+//                    dd($middleware);
+                    (new $middleware)->handle();
                 }
+//                if($route['middleware'] === 'guest'){
+//                    if(check_auth()){
+//                        redirect('/');
+//                    }
+//                }
+//
+//                if($route['middleware'] === 'auth'){
+//                    if(!check_auth()){
+//                        redirect('/register');
+//                    }
+//                }
                 require CONTROLLERS . "/{$route['controller']}";
                 $matches = true;
                 break;
@@ -77,6 +87,10 @@ class Router
 
     public function delete($uri, $controller){
         return $this->add($uri, $controller, 'DELETE');
+    }
+
+    public function patch($uri, $controller){
+        return $this->add($uri, $controller, 'PATCH');
     }
 
 }
