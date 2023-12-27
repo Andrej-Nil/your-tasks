@@ -17,11 +17,11 @@ $router->get('tasks/edit', 'task/edit.php')->only('auth');
 $router->put('tasks/update', 'task/update.php')->only('auth');
 
 // Tasks routes api
-$router->patch('api/progress','task/progress.php' )->only('auth');
-$router->patch('api/complete','task/complete.php' )->only('auth');
-$router->patch('api/cancel','task/cancel.php' )->only('auth');
+$router->patch('api/tasks/progress','task/progress.php' )->only('auth');
+$router->patch('api/tasks/complete','task/complete.php' )->only('auth');
+$router->patch('api/tasks/cancel','task/cancel.php' )->only('auth');
 
-
+//dd($router->routes);
 
 // ------------------------------------------
 // user
@@ -29,7 +29,9 @@ $router->get('user/show', 'user/show.php')->only('auth');
 
 $router->get('register', 'user/register.php')->only('guest');
 $router->post('register', 'user/store.php')->only('guest');
-
+//-----------------------------------------
+$router->get('user/register', 'user/store.php')->only('guest');
+//-----------------------------------------
 $router->get('login', 'user/login.php')->only('guest');
 $router->post('login', 'user/login.php')->only('guest');
 $router->get('logout', 'user/logout.php')->only('auth');

@@ -78,6 +78,7 @@ class Router
     }
 
     public function post($uri, $controller){
+
         return $this->add($uri, $controller, 'POST');
     }
 

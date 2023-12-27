@@ -32,17 +32,17 @@
   }
 
 }
-
-.task-card__link{
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
+//
+//.task-card__link{
+//  display: flex;
+//  flex-direction: column;
+//  height: 100%;
+//}
 
 .task-card__data{
   font-size: 12px;
   //text-align: right;
-  margin-bottom: 5px;
+  margin-bottom: 20px;
 }
 
 .task-card__title{
@@ -104,4 +104,8 @@
   opacity: 50%;
   width: 100%;
   height: 100%;
+}
+
+.task-card__option{
+  d:b
 }

@@ -1,7 +1,8 @@
 <div data-task="<?= $task['id'] ?>" class="task-card <?= getTaskStatusCls($task) ?>">
-    <a href="tasks/show?id=<?=$task['id'] ?>" class="task-card__link">
         <p class="task-card__data">от <?= $task['date_creating'] ?></p>
-        <p class="task-card__title"><?= h($task['title']) ?></p>
+        <p class="task-card__title">
+            <a href="/tasks/show?id=<?= $task['id'] ?>"> <?= h($task['title']) ?> </a>
+        </p>
         <?php if ($task['description']): ?>
             <p class="task-card__desc"><?= h($task['description']) ?></p>
         <?php endif; ?>
@@ -10,7 +11,7 @@
                   <span class="task-card-row__label">
                         Статус
                   </span>
-                <span class="task-card-row__value">
+                <span data-status-text class="task-card-row__value">
                       <?= getTaskStatusWord($task['status']) ?>
                 </span>
             </div>
@@ -45,26 +46,25 @@
                 </div>
             <?php endif; ?>
         </div>
-    </a>
         <div class="task-card__panel">
             <?php if($task['status'] === 'progress'): ?>
-            <button task-status="progress" class="btn btn--icon">
-                <img class="btn__icon" src="../assets/img/icons/pause.svg" alt="">
+            <button data-action="progress" class="btn btn--icon">
+                <img data-icon-progress class="btn__icon" src="<?= IMG ?>/icons/pause.svg" alt="">
             </button>
             <?php elseif($task['status'] === 'pause'): ?>
-                <button task-status="progress" class="btn btn--icon">
-                    <img class="btn__icon" src="../assets/img/icons/play.svg" alt="">
+                <button data-action="progress" class="btn btn--icon">
+                    <img class="btn__icon" src="<?= IMG ?>/icons/play.svg" alt="">
                 </button>
             <?php endif ?>
 
             <?php if($task['status'] !== 'completed' && $task['status'] !== 'canceled'): ?>
-                <button task-status="complete" class="btn btn--icon">
-                    <img class="btn__icon" src="../assets/img/icons/check.svg" alt="">
+                <button data-action="complete" class="btn btn--icon">
+                    <img class="btn__icon" src="<?= IMG ?>/icons/check.svg" alt="">
                 </button>
             <?php endif ?>
 
             <a href="/tasks/edit?id=<?=$task['id']?>" class="btn btn--icon">
-                <img class="btn__icon" src="../assets/img/icons/settings.svg" alt="">
+                <img class="btn__icon" src="<?= IMG ?>/icons/settings.svg" alt="">
             </a>
         </div>
 </div>

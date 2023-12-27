@@ -140,3 +140,24 @@ function title($title = ''){
     return "Your Tasks - " . $title;
 }
 
+
+function getStatusData($statusKey){
+
+    $statusData = [
+        'pause'=> [
+            'status' => 'pause',
+            'statusText' => 'Приостановленно',
+            'icon' => IMG . '/icons/play.svg',
+        ],
+        'progress' => [
+            'status' => 'progress',
+            'statusText' => 'Активна',
+            'icon' => IMG . '/icons/pause.svg',
+
+        ],
+        'complete' => [
+
+        ],
+    ];
+    return $statusData[$statusKey];
+}
