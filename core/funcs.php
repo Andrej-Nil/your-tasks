@@ -49,6 +49,15 @@ function timeLeft($endTime)
         return $startTime->diff($endTime);
     }
 
+    function checkForOverdue($deadline) {
+        $difference = getDifferenceTime(date("Y-m-d"), $deadline);
+        if($difference->invert){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 function getTaskStatusCls($task) {
     if($task['status'] === 'cancelled') {
@@ -57,11 +66,8 @@ function getTaskStatusCls($task) {
     if($task['status'] === 'completed') {
         return $task['status'];
     }
-    if($task['deadline']) {
-        $difference = getDifferenceTime(date("Y-m-d"), $task['deadline']);
-        if ($difference->invert) {
-            return 'expired';
-        }
+    if(checkForOverdue($task['deadline'])) {
+       return 'overdue';
     }
     return $task['status'];
 
@@ -141,21 +147,31 @@ function title($title = ''){
 }
 
 
-function getStatusData($statusKey){
+function getStatusData($statusKey, $task){
+    if($task['deadline']){
+        $isOverdue = checkForOverdue($task['deadline']) ? 'overdue' : null;
+    }else{
+        $isOverdue = null;
+    }
+
 
     $statusData = [
         'pause'=> [
+            'id'=>$task['id'],
             'status' => 'pause',
             'statusText' => 'Приостановленно',
             'icon' => IMG . '/icons/play.svg',
+            'isOverdue' => $isOverdue,
         ],
         'progress' => [
+            'id'=>$task['id'],
             'status' => 'progress',
             'statusText' => 'Активна',
             'icon' => IMG . '/icons/pause.svg',
+            'isOverdue' => $isOverdue,
 
         ],
-        'complete' => [
+        'completed' => [
 
         ],
     ];

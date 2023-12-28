@@ -12,7 +12,6 @@ require CORE . '/funcs.php';
 $router = new Router();
 
 require_once CONFIG . '/routes.php';
-//dd(IMG);
 $router->match();
 
 

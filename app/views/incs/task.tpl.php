@@ -53,7 +53,7 @@
             </button>
             <?php elseif($task['status'] === 'pause'): ?>
                 <button data-action="progress" class="btn btn--icon">
-                    <img class="btn__icon" src="<?= IMG ?>/icons/play.svg" alt="">
+                    <img data-icon-progress class="btn__icon" src="<?= IMG ?>/icons/play.svg" alt="">
                 </button>
             <?php endif ?>
 

@@ -125,18 +125,32 @@ class TaskController{
   }
 
   changeProgress = ($task, data) => {
-
+    this.changeBtnProgress($task, data)
+    if(data.isOverdue){
+      $task.classList.remove('pause');
+      $task.classList.remove('progress');
+      $task.classList.add(data.isOverdue);
+      return;
+    }
 
     if(data.status === 'progress') {
       $task.classList.remove('pause');
-      $task.classList.add('progress')
+      $task.classList.add('progress');
+      return;
     }
 
     if(data.status === 'pause'){
       $task.classList.remove('progress');
       $task.classList.add('pause');
+      return;
     }
+
+
     // console.log(data);
+
+  }
+
+  changeBtnProgress = ($task, data) => {
     const $statusText = $task.querySelector('[data-status-text]');
     const $iconBtn = $task.querySelector('[data-icon-progress ]');
     $statusText.innerHTML = data.statusText;

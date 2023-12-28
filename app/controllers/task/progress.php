@@ -11,9 +11,8 @@ if ($task) {
         echo json_encode(['error' => 'Задача была завершина']);
         die;
     }
-    $statusData = $task['status'] === 'progress' ? getStatusData('pause') : getStatusData('progress');
+    $statusData = $task['status'] === 'progress' ? getStatusData('pause', $task) : getStatusData('progress', $task);
 
-    $statusData['id'] = $task['id'];
     $value = [
         $statusData['status'],
         $statusData['id']

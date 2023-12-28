@@ -9,13 +9,14 @@
   background: #fff;
   padding: 15px;
   border-radius: 5px;
+  transition: 0.3s ease-in-out;
   &:hover{
     .task-card__panel{
       transform: translateX(0);
     }
   }
 
-  &.expired{
+  &.overdue{
     background: #ffcccc;
   }
   &.completed{
