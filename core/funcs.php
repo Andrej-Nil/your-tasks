@@ -169,10 +169,11 @@ function getStatusData($statusKey, $task){
             'statusText' => 'Активна',
             'icon' => IMG . '/icons/pause.svg',
             'isOverdue' => $isOverdue,
-
         ],
         'completed' => [
-
+            'id'=>$task['id'],
+            'status' => 'completed',
+            'statusText' => 'Завершена',
         ],
     ];
     return $statusData[$statusKey];

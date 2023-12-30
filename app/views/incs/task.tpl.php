@@ -57,7 +57,7 @@
                 </button>
             <?php endif ?>
 
-            <?php if($task['status'] !== 'completed' && $task['status'] !== 'canceled'): ?>
+            <?php if($task['status'] !== 'completed' && $task['status'] !== 'cancelled'): ?>
                 <button data-action="complete" class="btn btn--icon">
                     <img class="btn__icon" src="<?= IMG ?>/icons/check.svg" alt="">
                 </button>

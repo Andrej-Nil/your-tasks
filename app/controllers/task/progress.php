@@ -7,8 +7,12 @@ $task = $db->query("SELECT * FROM tasks WHERE id=? LIMIT 1", [$id])->find();
 
 
 if ($task) {
-    if ($task['status'] === 'complete') {
-        echo json_encode(['error' => 'Задача была завершина']);
+    if ($task['status'] === 'completed') {
+        echo json_encode(['error' => 'Задача была завершена']);
+        die;
+    }
+    if($task['status'] === 'cancelled'){
+        echo json_encode(['error' => 'Задача была отменена. Что бы завершить задачу, необходимо возобновить ее']);
         die;
     }
     $statusData = $task['status'] === 'progress' ? getStatusData('pause', $task) : getStatusData('progress', $task);
@@ -26,18 +30,10 @@ if ($task) {
             'data' => $statusData
         ];
         echo json_encode($data);
-        die;
-    }else{
-        echo json_encode(['error' => 'Упс! При сохранении, что то пошло не по плану!']);
-        die;
+    }else {
+        echo json_encode(['error' => 'Упс! При сохранении, что-то пошло не по плану!']);
     }
-
-
-//    if($task['status'] === 'progress'){
-//        echo json_encode(['status'=>$task['status'], 'new_status'=>$newStatus]);
-//    }else if($task['status'] === 'pause'){
-//        echo json_encode(['status'=>$task['status'], 'new_status'=>$newStatus]);
-//    }
+    die;
 } else {
     echo json_encode(['error' => 'Задача не существует или была удаленна']);
     die;

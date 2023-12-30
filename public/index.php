@@ -6,7 +6,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require dirname(__DIR__) . '/config/config.php';
 require_once __DIR__ . '/boostrap.php';
 require CORE . '/funcs.php';
-
+require CORE . '/messages.php';
 
 
 $router = new Router();
