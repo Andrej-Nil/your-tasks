@@ -50,6 +50,9 @@ function timeLeft($endTime)
     }
 
     function checkForOverdue($deadline) {
+       if(!$deadline){
+           return false;
+       }
         $difference = getDifferenceTime(date("Y-m-d"), $deadline);
         if($difference->invert){
             return true;
@@ -77,7 +80,7 @@ function getTaskStatusWord($status) {
     $statusList = [
         'completed' => 'Выполнено',
         'pause' => 'Приостановлено',
-        'progress' => 'Активна',
+        'active' => 'Активна',
         'cancelled' => 'Отменен',
     ];
 
@@ -147,12 +150,14 @@ function title($title = ''){
 }
 
 
-function getStatusData($statusKey, $task){
-    if($task['deadline']){
-        $isOverdue = checkForOverdue($task['deadline']) ? 'overdue' : null;
-    }else{
-        $isOverdue = null;
-    }
+function getStatusData($statusKey, $action, $task){
+    $isOverdue = checkForOverdue($task['deadline']) ? 'overdue' : null;
+//    if($task['deadline']){
+//
+//        $isOverdue = checkForOverdue($task['deadline']) ? 'overdue' : null;
+//    }else{
+//        $isOverdue = null;
+//    }
 
 
     $statusData = [
@@ -162,18 +167,28 @@ function getStatusData($statusKey, $task){
             'statusText' => 'Приостановленно',
             'icon' => IMG . '/icons/play.svg',
             'isOverdue' => $isOverdue,
+            'action'=> $action
         ],
-        'progress' => [
+        'active' => [
             'id'=>$task['id'],
-            'status' => 'progress',
+            'status' => 'active',
             'statusText' => 'Активна',
             'icon' => IMG . '/icons/pause.svg',
             'isOverdue' => $isOverdue,
+            'action'=> $action,
+            'completeIcon' => IMG . '/icons/check.svg',
         ],
         'completed' => [
             'id'=>$task['id'],
             'status' => 'completed',
             'statusText' => 'Завершена',
+            'action'=> $action
+        ],
+        'cancelled' => [
+            'id'=>$task['id'],
+            'status' => 'cancelled',
+            'statusText' => 'Отменена',
+            'action'=> $action
         ],
     ];
     return $statusData[$statusKey];

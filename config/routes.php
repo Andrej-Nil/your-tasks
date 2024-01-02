@@ -17,9 +17,11 @@ $router->get('tasks/edit', 'task/edit.php')->only('auth');
 $router->put('tasks/update', 'task/update.php')->only('auth');
 
 // Tasks routes api
-$router->patch('api/tasks/progress','task/progress.php' )->only('auth');
-$router->patch('api/tasks/complete','task/complete.php' )->only('auth');
-$router->patch('api/tasks/cancel','task/cancel.php' )->only('auth');
+$router->patch('api/tasks/activate','task/api.activate.php' )->only('auth');
+$router->patch('api/tasks/pause','task/api.pause.php' )->only('auth');
+$router->patch('api/tasks/complete','task/api.complete.php' )->only('auth');
+$router->patch('api/tasks/cancel','task/api.cancel.php' )->only('auth');
+$router->patch('api/tasks/resume','task/api.resume.php' )->only('auth');
 
 //dd($router->routes);
 

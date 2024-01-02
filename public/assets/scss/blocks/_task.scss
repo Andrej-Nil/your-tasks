@@ -1,7 +1,24 @@
 .task{
+  position: relative;
   padding: 15px;
   background: #fff;
   border-radius: 5px;
+  transition: 0.3s ease-in-out;
+  &.overdue{
+    background: #ffcccc;
+  }
+  &.completed{
+    background: #ccffcc;
+  }
+  &.pause{
+    background: #ffffcc;
+  }
+  &.active{
+    background: #fff;
+  }
+  &.cancelled{
+    background: #cccccc;
+  }
 }
 
 .task__title{
@@ -41,7 +58,6 @@
 }
 
 .task__controls{
-  width: 40px;
   display: flex;
   flex-direction: column;
   gap: 10px;

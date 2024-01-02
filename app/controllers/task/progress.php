@@ -15,7 +15,9 @@ if ($task) {
         echo json_encode(['error' => 'Задача была отменена. Что бы завершить задачу, необходимо возобновить ее']);
         die;
     }
-    $statusData = $task['status'] === 'progress' ? getStatusData('pause', $task) : getStatusData('progress', $task);
+    $statusData = $task['status'] === 'progress'
+        ? getStatusData('pause', $task)
+        : getStatusData('progress', $task);
 
     $value = [
         $statusData['status'],

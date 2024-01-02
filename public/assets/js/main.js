@@ -25,7 +25,6 @@ class Service {
     }
 
     getData = (api, method, body) => {
-
         return fetch(api, {
             method: method,
             body: new URLSearchParams(body)
@@ -109,54 +108,31 @@ class TaskController {
         this.listeners();
     }
 
-    changeStatusHandler = async ($btn) => {
+
+    actionHandler = async ($btn) => {
         const $task = $btn.closest('[data-task]');
         this.view.showSpinner($task);
-        const action = $btn.dataset.action;
+        const type = $btn.dataset.action;
         const id = this.getId($task);
-        // if(!$task) {
-        //   log.error(`Error: $task typeof ${typeof $task}. $task must be DOM Element`);
-        //   return;
-        // }
-
-
-        const res = await this.model.changeStatus({id, action});
-
-        if (res.success) {
-            this.view.hideSpinner($task);
-            this.success($task, res);
-        } else if (res.error) {
-            this.view.hideSpinner($task);
-            this.fail($task, res)
-        }
+        const res = await this.model.action({id, type});
+            if (res.success) {
+                this.view.hideSpinner($task);
+                this.view.changeStatusHandler($task, res);
+            } else if (res.error) {
+                this.view.hideSpinner($task);
+                console.log(res);
+            }
     }
-
-    // complete = ($btn) => {
-    //
-    // }
 
     getId = ($task) => {
         return $task.dataset.task;
     }
 
-    success = ($task, res) => {
-        if(res.data.status === 'completed'){
-            this.view.completeHandler($task, res.data);
-        }else{
-            this.view.progressHandler($task, res.data);
-        }
-
-    }
-
-    fail = ($task, res) => {
-        console.log(res);
-    }
 
     clickHandler = async (e) => {
         if (e.target.closest("[data-action]")) {
-            await this.changeStatusHandler(e.target.closest("[data-action]"));
+            await this.actionHandler(e.target.closest("[data-action]"));
         }
-
     }
 
     listeners = () => {
@@ -167,17 +143,20 @@ class TaskController {
 class TaskModel extends Service {
     constructor() {
         super();
-        this.base = '/api/tasks/'
-        this.progress = this.base + 'progress';
-        this.complete = this.base + 'complete';
-        this.cancel = this.base + 'cancel';
+        this.base = '/api/tasks/';
+        this.pauseApi = this.base + 'pause';
+        this.activateApi = this.base + 'activate';
+        this.completeApi = this.base + 'complete';
+        this.cancelApi = this.base + 'cancel';
+        this.returnApi = this.base + 'return';
 
     }
 
-    changeStatus = async (data) => {
-        const api = this.base + data.action;
-        return await this.patch(api, {id: data.id});
+    action = async (data) => {
+        const api = this.base + data.type;
+        return await this.patch(api, data);
     }
+
 }
 
 class TaskView extends Render {
@@ -188,10 +167,15 @@ class TaskView extends Render {
 
     init = () => {
         this.spinner = new Spinner();
-        this.PAUSE = 'pause';
-        this.PROGRESS = 'progress';
-        this.COMPLETED = 'completed';
-        this.OVERDUE = 'overdue';
+        this.statusList = [
+            'pause', 'active', 'completed', 'overdue', 'cancelled'
+        ];
+
+        // this.PAUSE = 'pause';
+        // this.ACTIVE = 'active';
+        // this.COMPLETED = 'completed';
+        // this.OVERDUE = 'overdue';
+        // this.CANCELLED = 'cancelled';
     }
 
     showSpinner = ($task) => {
@@ -202,74 +186,152 @@ class TaskView extends Render {
         this.spinner.destroy($task);
     }
 
-    changeTextStatus = ($task, statusText) => {
+    changeStatusText = (statusText, $task) => {
         const $statusText = $task.querySelector('[data-status-text]');
         $statusText.innerHTML = statusText;
     }
 
-    changeBtnProgress = ($task, icon) => {
-        const $iconBtn = $task.querySelector('[data-icon-progress ]');
-        $iconBtn.src = icon;
+    changeActivateBtn = (data, $task) => {
+        const $btn = $task.querySelector('[data-action="activate"]');
+        const $iconBtn = $btn.querySelector('[data-icon]');
+        $btn.dataset.action = 'pause';
+        $iconBtn.src = data.icon;
     }
 
-    deleteActionBtn = ($task) => {
+    addActivateBtn = (data, $task) => {
+        const props = {
+            action:'pause',
+            icon: data.icon
+        }
+        const $controlsBlock = $task.querySelector('[data-controls]');
+        this.render($controlsBlock, this.getActionBtnHtml, props, false,  'afterBegin');
+    }
+
+    addCompleteBtn = (data, $task) => {
+       const props = {
+           action:'complete',
+           icon: data.completeIcon
+       }
+        const $controlsBlock = $task.querySelector('[data-controls]');
+        this.render($controlsBlock, this.getActionBtnHtml, props, false,  'afterBegin');
+    }
+
+    changePauseBtn = (data, $task) => {
+        const $btn = $task.querySelector('[data-action="pause"]');
+        const $iconBtn = $btn.querySelector('[data-icon]');
+        $btn.dataset.action = 'activate';
+        $iconBtn.src = data.icon;
+    }
+
+    changeCancelBtn = ($task) => {
+        const $btn = $task.querySelector('[data-action="cancel"]');
+        $btn.classList.remove('btn--cancel');
+        $btn.classList.add('btn--action');
+        $btn.dataset.action = 'resume';
+        $btn.innerHTML = 'Вернуть';
+    }
+
+    changeResumeBtn = ($task) => {
+        const $btn = $task.querySelector('[data-action="resume"]');
+        $btn.classList.remove('btn--action');
+        $btn.classList.add('btn--cancel');
+        $btn.dataset.action = 'cancel';
+        $btn.innerHTML = 'Отмена';
+    }
+
+    deleteActionBtn = ($task, except = '') => {
         const $buttons = $task.querySelectorAll('[data-action]');
 
         $buttons.forEach(($item) => {
+            if($item.dataset.action === except) return;
             this.delete($item);
         })
+    }
+
+    activate = (data, $task) => {
+        this.changeColor(data, $task);
+        this.changeStatusText(data.statusText, $task);
+        this.changeActivateBtn(data, $task)
+    }
+
+    pause = (data, $task) => {
+        this.changeColor(data, $task);
+        this.changeStatusText(data.statusText, $task);
+        this.changePauseBtn(data, $task);
+    }
+
+    complete = (data, $task) => {
+        this.changeColor(data, $task);
+        this.changeStatusText(data.statusText, $task);
+        this.deleteActionBtn($task);
+    }
+
+    cancel = (data, $task) => {
+        this.changeColor(data, $task);
+        this.changeStatusText(data.statusText, $task);
+        this.deleteActionBtn($task, 'cancel');
+        this.changeCancelBtn($task);
+    }
+
+    resume = (data, $task) => {
+        this.changeColor(data, $task);
+        this.changeStatusText(data.statusText, $task);
+        this.changeResumeBtn($task);
+        this.addCompleteBtn(data, $task);
+        this.addActivateBtn(data, $task);
+
 
 
     }
 
-    overdueStatusView = ($task) => {
-        $task.classList.remove(this.PAUSE);
-        $task.classList.remove(this.PROGRESS);
-        $task.classList.add(this.OVERDUE);
-    }
-
-    progressStatusView = ($task) => {
-        $task.classList.remove(this.PAUSE);
-        $task.classList.add(this.PROGRESS);
-
-    }
-
-    pauseStatusView = ($task) => {
-        $task.classList.remove(this.PROGRESS);
-        $task.classList.add(this.PAUSE);
-    }
-    completedStatusView = ($task) => {
-        $task.classList.remove(this.PROGRESS);
-        $task.classList.remove(this.PAUSE);
-        $task.classList.remove(this.OVERDUE);
-        $task.classList.add(this.COMPLETED);
-    }
-
-    changeStatusView = ($task, data) => {
-        if (data.isOverdue) {
-            this.overdueStatusView($task);
-        } else if (data.status === this.PROGRESS) {
-
-            this.progressStatusView($task);
-        } else if (data.status === this.PAUSE) {
-            this.pauseStatusView($task);
-        } else if (data.status === this.COMPLETED){
-            this.completedStatusView($task)
+    changeColor = (data, $task) => {
+        const isOverdue = data.isOverdue;
+        this.statusList.forEach( (item) => {
+            $task.classList.remove(item);
+        });
+        if(isOverdue) {
+            $task.classList.add(isOverdue)
+        } else {
+            $task.classList.add(data.status)
         }
     }
 
-    progressHandler = ($task, data) => {
-        this.changeTextStatus($task, data.statusText);
-        this.changeBtnProgress($task, data.icon);
-        this.changeStatusView($task, data)
+    changeStatusHandler = ($task, response) => {
+        const data = response.data;
+        switch (response.data.action){
+            case 'activate': {
+                this.activate(data, $task);
+                break;
+            }
+            case 'pause': {
+                this.pause(data, $task);
+                break;
+            }
+            case 'complete': {
+                this.complete(data, $task);
+                break;
+            }
+            case 'cancel': {
+                this.cancel(data, $task);
+                break;
+            }
+            case 'resume': {
+                this.resume(data, $task);
+                break;
+            }
+            default:{
+                break;
+            }
+        }
     }
 
-    completeHandler = ($task, data) => {
-        this.changeTextStatus($task, data.statusText);
-        this.changeStatusView($task, data)
-        this.deleteActionBtn($task)
+    getActionBtnHtml = (props) => {
+        return `
+            <button data-action="${props.action}" class="btn btn--icon">
+                <img data-icon class="btn__icon" src="${props.icon}" alt="">
+            </button>
+        `
     }
-
 }
 
 
