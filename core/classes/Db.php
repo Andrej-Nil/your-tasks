@@ -69,4 +69,8 @@ final class Db
         return $this->stmt->rowCount();
     }
 
+    public function getCount(){
+        return $this->stmt->fetchColumn();
+    }
+
 }

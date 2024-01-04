@@ -3,7 +3,7 @@
         <h1 class="main-title">Новая задача</h1>
         <div class="content">
 
-            <main class="main">
+            <div class="main">
                 <form class="form" action="/tasks" method="post">
                     <div class="form__controls">
                         <div class="control">
@@ -30,7 +30,7 @@
                     </div>
 
                 </form>
-            </main>
+            </div>
         </div>
 
     </div>

@@ -4,7 +4,7 @@
         <h1 class="main-title">Регистрация</h1>
         <div class="content">
 
-            <main class="main">
+            <div class="main">
                 <form class="form" action="register" method="post">
                     <div class="form__controls">
                         <div class="control">
@@ -37,7 +37,7 @@
                     </div>
 
                 </form>
-            </main>
+            </div>
         </div>
 
     </div>

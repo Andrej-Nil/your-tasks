@@ -4,7 +4,7 @@
         <h1 class="main-title">Вход</h1>
         <div class="content">
 
-            <main class="main">
+            <div class="main">
                 <form class="form" action="login" method="post">
                   <div class="form__controls">
                     <div class="control">

@@ -5,7 +5,7 @@
 
         <div class="content">
 
-            <main class="main">
+            <div class="main">
                <div data-task="<?= $task['id'] ?>" class="task <?= getTaskStatusCls($task) ?>">
                  <h1 class="task__title"><?= h($task['title'])?></h1>
                     <p class="task__date">от <?= $task['date_creating'] ?></p>
@@ -81,7 +81,7 @@
                      <?php endif ?>
                    </div>
                </div>
-            </main>
+            </div>
             <div class="sidebar">
                 sidebar
             </div>

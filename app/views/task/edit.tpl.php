@@ -5,7 +5,7 @@
         <h1 class="main-title">Редактирование  задачи</h1>
         <div class="content">
 
-            <main class="main">
+            <div class="main">
                 <form class="form" action="/tasks/update" method="post">
                   <input type="hidden" name="_method" value="PUT">
                   <input type="hidden" name="id" value="<?= $task['id'] ?>">
@@ -35,7 +35,7 @@
                     </div>
 
                 </form>
-            </main>
+            </div>
         </div>
 
     </div>

@@ -1,12 +1,15 @@
 .alert{
-  padding: 10px;
-  background: #fff;
   margin-bottom: 20px;
+}
+
+.alert__content{
+  background: #fff;
+  padding: 10px;
   border-radius: 5px;
-  &--success{
+  &.alert--success{
     background: #ccffcc;
   }
-  &--error{
-     background: #ffcccc;
-   }
+  &.alert--error{
+    background: #ffcccc;
+  }
 }

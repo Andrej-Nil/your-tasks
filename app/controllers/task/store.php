@@ -1,7 +1,7 @@
 <?php
 $db = \classes\App::get(\classes\Db::class);
 $validator = \classes\App::get(\classes\Validator::class);
-//dd($validator);
+
 $fillable = ['title', 'description', 'deadline'];
 $createDate = date('Y-m-d');
 
@@ -9,7 +9,7 @@ $data = load($fillable);
 $values = [
     $data['title'],
     $data['description'],
-    'progress',
+    'active',
     $createDate,
     $data['deadline'] ?: null,
 ];

@@ -5,14 +5,18 @@
 
           <div class="content">
 
-              <main class="main">
+              <div class="main">
                 <div class="task-list">
 
                 <?php foreach ($tasks as $task): ?>
                   <?php require VIEWS . '/incs/task.tpl.php' ?>
                 <?php endforeach; ?>
                 </div>
-              </main>
+                <?php if(count($links) > 1): ?>
+                  <?php require VIEWS . '/incs/pagination.tpl.php' ?>
+                <?php endif; ?>
+
+              </div>
               <div class="sidebar">
                 sidebar
               </div>
