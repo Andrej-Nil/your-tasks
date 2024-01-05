@@ -10,7 +10,7 @@
                     <div class="control">
                       <label class="control__label" for="email">Почта</label>
                       <input id="email" type="email" name="email" class="control__input input" autofocus required>
-                      <span class="control__error">Почта или пароль не совподают</span>
+<!--                      <span class="control__error">Почта или пароль не совподают</span>-->
                     </div>
 
                     <div class="control">
@@ -29,7 +29,7 @@
                   </div>
 
                 </form>
-            </main>
+            </div>
         </div>
 
     </div>

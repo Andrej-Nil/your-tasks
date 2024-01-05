@@ -32,7 +32,7 @@
                         <a href="logout" class="menu__item nav__item">Выход</a>
                     <?php else: ?>
                         <a href="login" class="menu__item nav__item">Вход</a>
-                        <a href="user/register" class="menu__item nav__item">Регистрация</a>
+                        <a href="register" class="menu__item nav__item">Регистрация</a>
 
                     <?php endif; ?>
 <!--                    <a href="/" class="menu__item nav__item">Андрей</a>-->

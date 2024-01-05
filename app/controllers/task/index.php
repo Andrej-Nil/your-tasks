@@ -4,7 +4,7 @@ $title = title('Задачи');
 
 $page = $_GET['page'] ?? 1;
 $perPage = 9;
-$totalPage = $db->query("SELECT COUNT(*) FROM `tasks`")->getCount();
+$totalPage = $db->query("SELECT COUNT(*) FROM `tasks`")->getColumn();
 $pagination = new \classes\Pagination((int)$page, $perPage, $totalPage);
 
 $start = $pagination->getStart();

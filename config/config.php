@@ -13,3 +13,4 @@ define("APP", ROOT . '/app');
 define("CONTROLLERS", APP . '/controllers');
 define("VIEWS", APP . '/views');
 define("PATH", 'http://your-tasks.local.ru');
+define("ERRORS_LOG_FILE", ROOT . '/errors.log');

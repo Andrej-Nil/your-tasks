@@ -5,15 +5,17 @@ namespace classes;
 class Validator
 {
     protected $errors = [];
-    protected $rules_list = ['required', 'min', 'max', 'relevance', 'email', 'match'];
     protected $data_items;
+    protected $rules_list = ['required', 'min', 'max', 'relevance', 'email', 'match', 'unique'];
+
     protected $messages = [
         'required' => 'Поле :fieldname: обязательное',
         'min' => 'Минимальная длина :fieldname: :rulevalue: символов',
         'max' => 'Максимальная длина :fieldname: :rulevalue: символов',
         'relevance' => 'Дата сдачи не может быть прошедшим число',
         'email' => 'Почта указано некорректно',
-        'match' => 'Пароль не совподает'
+        'match' => 'Пароль не совподает',
+        'unique' => 'Пользователь с такой почтой уже существует'
     ];
 
 
@@ -108,7 +110,13 @@ class Validator
     }
 
     protected function match($value, $rule_value) {
-        return $value === $this->data_items([$rule_value]);
+        return $value === $this->data_items[$rule_value];
+    }
+
+    protected function unique($value, $rule_value) {
+
+        $data = explode(':', $rule_value);
+        return (!db()->query("SELECT {$data[1]} FROM {$data[0]} WHERE {$data[1]} = ?", [$value])->getColumn());
     }
 
 

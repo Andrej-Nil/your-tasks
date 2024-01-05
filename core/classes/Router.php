@@ -19,6 +19,12 @@ class Router
 
 
     public function add($uri, $controller, $method) {
+
+        if(is_array($method)){
+            $method = array_map('strtoupper', $method);
+        } else {
+            $method = [$method];
+        }
         $this->routes[] = [
             'uri'=> $uri,
             'controller'=> $controller,
@@ -32,9 +38,9 @@ class Router
 
         $matches = false;
         foreach ($this->routes as $route) {
-            if(($route['uri'] === $this->uri) && ($route['method'] === strtoupper($this->method))) {
+//            if(($route['uri'] === $this->uri) && ($route['method'] === strtoupper($this->method))) {
 
-
+            if(($route['uri'] === $this->uri) && (in_array($this->method, $route['method']))) {
                 if($route['middleware']){
                     $middleware = MIDDLEWARE[$route['middleware']] ?? false;
 

@@ -1,0 +1,2 @@
+[2024-01-05 18:01:30] DB Error: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'Test' for key 'users.name'
+[2024-01-05 18:03:17] DB Error: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'Test' for key 'users.name'

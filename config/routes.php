@@ -32,7 +32,7 @@ $router->get('user/show', 'user/show.php')->only('auth');
 $router->get('register', 'user/register.php')->only('guest');
 $router->post('register', 'user/store.php')->only('guest');
 //-----------------------------------------
-$router->get('user/register', 'user/store.php')->only('guest');
+//$router->get('user/register', 'user/store.php')->only('guest');
 //-----------------------------------------
 $router->get('login', 'user/login.php')->only('guest');
 $router->post('login', 'user/login.php')->only('guest');
