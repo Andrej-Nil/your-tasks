@@ -28,23 +28,26 @@ $validation = $validator->validate($data, [
 
 ]);
 
-
-
-$values = [
-    'name' => $data['name'],
-    'email' => $data['email'],
-    'password' => password_hash($data['password'], PASSWORD_DEFAULT),
-];
-
 if(!$validation->hasErrors()){
-//    dd($validation);
-//    $res = $db->query("INSERT INTO users (`name`, `email`, `password`) VALUES (?,?,?)",  $values);
-    $res = $db->query(
+    $values = [
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => password_hash($data['password'], PASSWORD_DEFAULT),
+    ];
+
+    $id = $db->query(
         "INSERT INTO users (`name`, `email`, `password`) VALUES (:name,:email,:password)",
-        $values);
-    if ($res) {
-        $_SESSION['success'] = "Регистрация прошла успешно";
-        redirect('/');
+        $values)->getInsertId();
+    if ($id) {
+       $user = $db->query("SELECT * FROM users WHERE id=?", [$id])->find();
+       if($user){
+           $_SESSION['user'] = getUserData($user);
+           $_SESSION['success'] = "Регистрация прошла успешно";
+           redirect(PATH);
+       }
+
+        $_SESSION['error'] = "Произошла ошибка, выполните вход";
+        redirect(LOGIN_PAGE);
     } else {
         $_SESSION['error'] = "Произошла ошибка, регистрация неудалась";
         require_once VIEWS . '/user/register.tpl.php';

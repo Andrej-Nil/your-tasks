@@ -1,0 +1,29 @@
+.note-store{
+  padding: 15px;
+}
+
+.note-store__title{
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.note-create{
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.note-create__input{
+  border-radius: 5px 0 0 5px;
+}
+
+.note-create__btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 5px 5px 0;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1;
+}

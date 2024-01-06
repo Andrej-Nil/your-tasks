@@ -3,14 +3,16 @@
 
 
 define("ROOT", dirname(__DIR__));
-define("WWW", ROOT . '/public');
-define("ASSETS", '/assets');
-define("IMG", ASSETS . '/img');
+const WWW = ROOT . '/public';
+const ASSETS = '/assets';
+const IMG = ASSETS . '/img';
 
-define("CORE", ROOT . '/core');
-define("CONFIG", ROOT . '/config');
-define("APP", ROOT . '/app');
-define("CONTROLLERS", APP . '/controllers');
-define("VIEWS", APP . '/views');
-define("PATH", 'http://your-tasks.local.ru');
-define("ERRORS_LOG_FILE", ROOT . '/errors.log');
+const CORE = ROOT . '/core';
+const CONFIG = ROOT . '/config';
+const APP = ROOT . '/app';
+const CONTROLLERS = APP . '/controllers';
+const VIEWS = APP . '/views';
+const PATH = 'http://your-tasks.local.ru';
+const LOGIN_PAGE = PATH . '/login';
+const WELCOME_PAGE = PATH .'/welcome';
+const ERRORS_LOG_FILE = ROOT . '/errors.log';

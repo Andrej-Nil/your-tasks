@@ -193,3 +193,14 @@ function getStatusData($statusKey, $action, $task){
     ];
     return $statusData[$statusKey];
 }
+
+function getUserData($user) {
+    $data = [];
+
+    foreach ($user as $key => $value) {
+        if($key !== 'password'){
+            $data[$key] = $value;
+        }
+    }
+    return $data;
+}

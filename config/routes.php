@@ -4,7 +4,7 @@ const MIDDLEWARE = [
     'auth' => \middleware\Auth::class,
     'guest' => \middleware\Guest::class
 ];
-
+$router->get('welcome', 'welcome.php')->only('guest');
 $router->get('', 'index.php')->only('auth');
 
 // Tasks routes
@@ -23,7 +23,7 @@ $router->patch('api/tasks/complete','task/api.complete.php' )->only('auth');
 $router->patch('api/tasks/cancel','task/api.cancel.php' )->only('auth');
 $router->patch('api/tasks/resume','task/api.resume.php' )->only('auth');
 
-//dd($router->routes);
+
 
 // ------------------------------------------
 // user
@@ -31,9 +31,7 @@ $router->get('user/show', 'user/show.php')->only('auth');
 
 $router->get('register', 'user/register.php')->only('guest');
 $router->post('register', 'user/store.php')->only('guest');
-//-----------------------------------------
-//$router->get('user/register', 'user/store.php')->only('guest');
-//-----------------------------------------
+
 $router->get('login', 'user/login.php')->only('guest');
 $router->post('login', 'user/login.php')->only('guest');
 $router->get('logout', 'user/logout.php')->only('auth');

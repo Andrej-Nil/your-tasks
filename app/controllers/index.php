@@ -4,7 +4,7 @@ $title = "Your Tasks";
 
 $page = $_GET['page'] ?? 1;
 $perPage =9;
-$totalPage = $db->query("SELECT COUNT(*) FROM `tasks` WHERE `status` NOT IN ('completed', 'cancelled')")->getCount();
+$totalPage = $db->query("SELECT COUNT(*) FROM `tasks` WHERE `status` NOT IN ('completed', 'cancelled')")->getColumn();
 $pagination = new \classes\Pagination((int)$page, $perPage, $totalPage);
 
 $start = $pagination->getStart();

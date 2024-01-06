@@ -3,4 +3,4 @@ if(isset($_SESSION['user'])){
     unset($_SESSION['user']);
 }
 
-redirect('/register');
+redirect(LOGIN_PAGE);

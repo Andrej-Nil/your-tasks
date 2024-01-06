@@ -9,13 +9,14 @@
                   <div class="form__controls">
                     <div class="control">
                       <label class="control__label" for="email">Почта</label>
-                      <input id="email" type="email" name="email" class="control__input input" autofocus required>
-<!--                      <span class="control__error">Почта или пароль не совподают</span>-->
+                      <input id="email" type="email" name="email" class="control__input input" required>
+                      <?= isset($validation) ? $validation->listErrors('email') : '' ?>
                     </div>
 
                     <div class="control">
                       <label class="control__label" for="password">Пароль</label>
                       <input id="password" type="password" name="password" class="control__input input" required>
+                      <?= isset($validation) ? $validation->listErrors('password') : '' ?>
                     </div>
                   </div>
 

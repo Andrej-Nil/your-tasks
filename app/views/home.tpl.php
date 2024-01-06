@@ -18,9 +18,8 @@
 
               </div>
               <div class="sidebar">
-                sidebar
+                <?php require VIEWS . '/incs/notes.tpl.php' ?>
               </div>
           </div>
       </div>
-
 <?php require  VIEWS . '/incs/footer.tpl.php' ?>

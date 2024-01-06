@@ -19,11 +19,13 @@
                     <img src="<?=IMG ?>/logo.svg" alt="" class="logo__img">
                 </a>
 
+              <?php if(check_auth()): ?>
                 <nav class="header__nav nav">
                     <a href="tasks" class="nav__item">Задачи</a>
                     <a href="tasks/create" class="nav__item">Добавить</a>
-                    <a href="/" class="nav__item">Настройки</a>
+<!--                    <a href="/" class="nav__item">Настройки</a>-->
                 </nav>
+              <?php endif; ?>
 
                 <div class="header__menu menu nav">
 

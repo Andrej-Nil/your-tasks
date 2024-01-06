@@ -1,0 +1,36 @@
+.welcome{
+  background: #fff;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.welcome__title{
+  font-size: 28px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.welcome__intro{
+  font-size: 16px;
+  margin-bottom: 50px;
+}
+
+.welcome__text{
+  margin-bottom: 20px;
+  &:last-child{
+    margin-bottom: 0;
+  }
+}
+
+.welcome__controls{
+  display: flex;
+  justify-content: space-between;
+}
+
+.welcome__call{
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 500;
+  font-size: 16px;
+}
