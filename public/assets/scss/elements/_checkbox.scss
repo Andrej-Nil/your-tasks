@@ -1,0 +1,50 @@
+.checkbox{
+
+}
+
+.checkbox__input{
+  display: none;
+}
+
+.checkbox__input:checked + .checkbox-color{
+  border: 2px solid #000;
+}
+
+
+
+.checkbox__fake{
+  display: block;
+  width: 15px;
+  height: 15px;
+  padding: 2px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.checkbox-color{
+  width: 29px;
+  height: 29px;
+  border: 2px solid #ccc;
+}
+
+.checkbox-color__paint{
+  display: block;
+  height: 100%;
+  width: 100%;
+  &.white{
+    background: #ffffff;
+  }
+
+  &.yellow{
+    background: #ffffcc;
+  }
+  &.green{
+    background: #ccffcc;
+  }
+  &.blue{
+  background: #aacdff;
+}
+  &.red{
+    background: #ffcccc;
+  }
+}

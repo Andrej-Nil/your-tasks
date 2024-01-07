@@ -1,5 +1,9 @@
 .note-store{
+  width: 100%;
+  position: relative;
+  overflow: hidden;
   padding: 15px;
+  //flex-grow: 1;
 }
 
 .note-store__title{
@@ -14,16 +18,13 @@
   margin-bottom: 20px;
 }
 
-.note-create__input{
-  border-radius: 5px 0 0 5px;
+.note-store__controls{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-.note-create__btn{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0 5px 5px 0;
-  font-size: 30px;
-  font-weight: 400;
-  line-height: 1;
+.note-store__btn{
+  font-size: 14px;
+  padding: 5px 15px;
 }

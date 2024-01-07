@@ -6,6 +6,7 @@
 @import "elements/input";
 @import "elements/btn";
 @import "elements/btn-menu";
+@import "elements/checkbox";
 
 @import "animations/flashing";
 
@@ -27,6 +28,9 @@
 
 @import "blocks/pagination";
 
+
+
+@import "blocks/message-block";
 @import "blocks/task-list";
 @import "blocks/task-card";
 @import "blocks/task";
@@ -34,6 +38,7 @@
 
 @import "blocks/sidebar";
 @import "blocks/note-store";
+@import "blocks/note-marker";
 @import "blocks/note-card";
 @import "blocks/footer";
 @import "blocks/copyright";

@@ -1,0 +1,15 @@
+.message-block{
+  background: #fff;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.message-block__text{
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 500;
+}
+.message-block__controls{
+  display: flex;
+  gap: 20px;
+}

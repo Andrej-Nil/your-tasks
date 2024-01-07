@@ -1,7 +1,43 @@
 .note-card{
+  position: relative;
   border: 1px solid #ccc;
   border-radius: 5px;
+  padding: 5px 32px 5px 5px;
+  margin-bottom: 10px;
+  font-size: 14px;
+
+  &.white{
+    background: #ffffff;
+  }
+
+  &.yellow{
+    background: #ffffcc;
+  }
+  &.green{
+    background: #ccffcc;
+  }
+  &.blue{
+    background: #aacdff;
+  }
+  &.red{
+    background: #ffcccc;
+  }
+}
+
+.note-card__text{
+  flex-grow: 1;
+}
+
+.note-card__btn{
+  position: absolute;
+  top: 0;
+  right: 0;
+  flex-shrink: 0;
+  border: none;
   padding: 5px;
-  display: flex;
-  gap: 2px;
+  width: 27px;
+  height: 27px;
+  &:hover{
+    background: #ffaaaa;
+  }
 }

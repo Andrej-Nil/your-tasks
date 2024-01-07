@@ -21,8 +21,9 @@
 
               <?php if(check_auth()): ?>
                 <nav class="header__nav nav">
-                    <a href="tasks" class="nav__item">Задачи</a>
-                    <a href="tasks/create" class="nav__item">Добавить</a>
+                  <a href="/" class="nav__item">Активные задачи</a>
+                    <a href="tasks" class="nav__item">Все задачи</a>
+                    <a href="tasks/create" class="btn btn--action">Добавить</a>
 <!--                    <a href="/" class="nav__item">Настройки</a>-->
                 </nav>
               <?php endif; ?>

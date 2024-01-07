@@ -1,0 +1,45 @@
+.note-marker{
+
+  background: #fff;
+  padding: 10px 10px 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-110%);
+  width: 100%;
+  transition: 0.3s ease-in-out;
+z-index: 10;
+  border-radius: 5px;
+  box-shadow: 0 12px 14px -6px rgba(0, 0, 0, 0.3);
+  &.open{
+    transform: translateY(0);
+  }
+}
+
+.note-marker__close{
+  width: 28px;
+  height: 28px;
+  margin-left: auto;
+  margin-bottom: 10px;
+}
+
+.note-marker__input{
+  margin-bottom: 10px;
+
+}
+
+.note-marker__controls{
+  display: flex;
+  justify-content: space-between;
+}
+
+.note-marker__colors{
+  display: flex;
+  gap: 10px;
+}
+
+.note-marker__btn{
+  padding: 5px;
+  font-size: 14px;
+  font-weight: 500;
+}
