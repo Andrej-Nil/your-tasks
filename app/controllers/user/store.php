@@ -2,6 +2,7 @@
 
 $db = \classes\App::get(\classes\Db::class);
 $validator = \classes\App::get(\classes\Validator::class);
+$auth = \classes\App::get(\classes\Auth::class);
 
 $fillable = ['name', 'email', 'password', 'confirm'];
 
@@ -39,9 +40,10 @@ if(!$validation->hasErrors()){
         "INSERT INTO users (`name`, `email`, `password`) VALUES (:name,:email,:password)",
         $values)->getInsertId();
     if ($id) {
-       $user = $db->query("SELECT * FROM users WHERE id=?", [$id])->find();
+
+       $user = $db->query("SELECT * FROM users WHERE id=? LIMIT 1", [$id])->find();
        if($user){
-           $_SESSION['user'] = getUserData($user);
+           $auth->set($user);
            $_SESSION['success'] = "Регистрация прошла успешно";
            redirect(PATH);
        }

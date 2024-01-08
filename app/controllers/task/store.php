@@ -1,4 +1,6 @@
 <?php
+
+
 $db = \classes\App::get(\classes\Db::class);
 $validator = \classes\App::get(\classes\Validator::class);
 
@@ -12,7 +14,10 @@ $values = [
     'active',
     $createDate,
     $data['deadline'] ?: null,
+    $_SESSION['user']['id']
 ];
+
+
 
 
 $validation = $validator->validate($data, [
@@ -31,7 +36,7 @@ $validation = $validator->validate($data, [
 if (!$validation->hasErrors()) {
 
     $res = $db->query(
-        "INSERT INTO tasks (`title`, `description`, `status`, `date_creating`, `deadline`) VALUES (?,?,?,?,?)",
+        "INSERT INTO tasks (`title`, `description`, `status`, `date_creating`, `deadline`, `user_id`) VALUES (?,?,?,?,?,?)",
         $values
     );
 

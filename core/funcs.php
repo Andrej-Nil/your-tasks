@@ -194,13 +194,13 @@ function getStatusData($statusKey, $action, $task){
     return $statusData[$statusKey];
 }
 
-function getUserData($user) {
-    $data = [];
 
-    foreach ($user as $key => $value) {
-        if($key !== 'password'){
-            $data[$key] = $value;
-        }
-    }
-    return $data;
+function getColor($color){
+    $color = strtolower(trim($color));
+    $colors = require CONFIG . '/colors.php';
+    $key = array_search($color, $colors, true);
+    if($key){
+        return $colors[$key];
+    };
+    return $colors[0];
 }

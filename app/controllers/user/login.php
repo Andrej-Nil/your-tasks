@@ -5,6 +5,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $db = \classes\App::get(\classes\Db::class);
     $validator = \classes\App::get(\classes\Validator::class);
+    $auth = \classes\App::get(\classes\Auth::class);
 
     $fillable = ['email', 'password'];
 
@@ -24,7 +25,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if($user) {
             if(password_verify($data['password'], $user['password'])){
-                $_SESSION['user'] = getUserData($user);
+                $auth->set($user);
                 $_SESSION['success'] = 'Вы успешно авторизовались';
                 redirect(PATH);
             }else{

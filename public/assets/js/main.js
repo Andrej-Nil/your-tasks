@@ -11,12 +11,24 @@ class Service {
     }
 
     patch = async (api, data) => {
-        const body = {
-            ...data,
-            _method: this.PATCH,
-        }
-        const response = await this.getData(api, this.POST, body);
 
+        if(data instanceof FormData){
+            data.append('_method', this.PATCH);
+        } else {
+            data._method = this.PATCH;
+        }
+
+        const response = await this.getData(api, this.POST, data);
+
+        if (response.ok) {
+            return await response.json()
+        } else {
+            return {error: 'Что то пошло не так! Поробуйте позже.'};
+        }
+    }
+
+    post = async (api, data) => {
+        const response = await this.getData(api, this.POST, data);
         if (response.ok) {
             return await response.json()
         } else {
@@ -31,15 +43,17 @@ class Service {
         })
     }
 
-}
+    createFormData = (data) =>{
+        const formData = new FormData();
+        for (let key in data) {
+            formData.append(`${key}`, data[key])
+        }
+        return formData;
 
-class Log {
-    error = (message = 'Произошла ошибка') => {
-        console.error(message);
     }
+
 }
 
-// this.declForTotalFindedItem = ['', 'а', 'ов'];
 class Render {
     delete = ($element) => {
         if (!$element) {
@@ -166,7 +180,7 @@ class TaskView extends Render {
     }
 
     init = () => {
-        this.spinner = new Spinner();
+        this.spinner = spinner;
         this.statusList = [
             'pause', 'active', 'completed', 'overdue', 'cancelled'
         ];
@@ -335,79 +349,146 @@ class TaskView extends Render {
 }
 
 
-class Task{
+class Tasks{
     constructor() {
         this.taskController = new TaskController();
     }
 }
 
-
-class NoteMaker{
+class Notes{
     constructor() {
-        this.$noteMaker =  document.querySelector('#noteMaker');
-        this.init();
-    }
-
-    init = () => {
-        if(!this.$noteMaker) return;
-        this.$input = this.$noteMaker.querySelector('[data-maker-input]')
-        this.isOpen = false;
-        this.listeners();
-    }
-
-    open = () => {
-        this.$noteMaker.classList.add('open');
-        this.isOpen = true;
-        this.$input.focus()
-    }
-
-    close = () => {
-        this.$noteMaker.classList.remove('open');
-        this.isOpen = false;
-    }
-
-    clickHandler = (e) => {
-        if(e.target.closest('[data-maker-open]')){
-            this.open();
-            return;
-        }
-
-        if(e.target.closest('[data-maker-close]')){
-            this.close();
-            return;
-        }
-
-        if(!e.target.closest('#noteMaker') && this.isOpen){
-
-        }
-
-    }
-    listeners = () => {
-        document.addEventListener('click', this.clickHandler);
+        const noteController = new NoteController();
     }
 }
 
-class NoteStore{
+
+
+
+class NoteController{
     constructor() {
         this.$noteStore = document.querySelector('#noteStore');
-        this.init();
+        this.init()
+
     }
 
     init = () => {
         if(!this.$noteStore) return;
-        this.noteMaker = new NoteMaker();
+        this.model = new NoteModel();
+        this.view = new NoteView( this.$noteStore);
+        this.listeners();
+    }
 
+    sendForm = async (e) => {
+        e.preventDefault()
+        const $form = e.target;
+        const formData = new FormData($form);
+
+        const res = await this.model.store(formData);
+        if(res.success){
+console.log(res)
+        } else if(res.error){
+            this.errorHandler(res.error, $form)
+        }
+
+    }
+
+    errorHandler = (errors, $form) => {
+        this.view.formErrors(errors, $form);
+    }
+
+
+
+    submitHandler = async (e) => {
+        if(e.target.closest('#noteMaker')){
+            await this.sendForm(e)
+        }
+
+
+    }
+
+    clickHandler = (e) => {
+        if(e.target.closest('[data-maker-open]')){
+            this.view.openMaker();
+        } else if(e.target.closest('[data-maker-close]')){
+            this.view.closeMaker();
+        }
+
+        // if(!e.target.closest('#noteMaker') && this.isOpen){
+        //
+        // }
+
+    }
+
+    listeners = () => {
+        document.addEventListener('submit', this.submitHandler)
+        document.addEventListener('click', this.clickHandler)
+    }
+}
+
+class NoteModel extends Service{
+    constructor() {
+        super();
+        this.base = 'api/notes';
+        this.createApi = this.base + '/store'
+    }
+
+    store = async (data) => {
+        return await this.post(this.createApi, data);
 
     }
 
 
 }
 
+class NoteView extends Render{
+    constructor($noteStore) {
+        super();
+        this.$noteStore = $noteStore;
+        this.spinner = spinner;
+        this.init()
+    }
+
+    init = () =>{
+        this.$maker = document.querySelector('#noteMaker');
+        this.$noteList = document.querySelector('#noteList');
+        this.$input = this.$maker.querySelector('[data-maker-input]');
+        this.$messages = this.$maker.querySelector('[data-messages]');
+        this.isOpenForm = false;
+    }
+
+    openMaker = () => {
+        this.$maker.classList.add('open');
+        this.isOpenForm = true;
+        this.$input.focus()
+    }
+
+    closeMaker = () => {
+        this.$maker.classList.remove('open');
+        this.isOpenForm = false;
+    }
+
+    formErrors(errors){
+        this.clearMessages();
+        this.render(this.$messages, this.getErrorMakerHtml, false, errors)
+    }
+
+    clearMessages = () => {
+        this.clear(this.$messages);
+    }
+
+
+    getErrorMakerHtml = (error) => {
+        return `<p class="note-marker__error">${error}</p>`
+    }
+}
+
+
 
 // const log = new Log();
-// const spinner = new Spinner();
-const task = new Task();
-const noteStore = new NoteStore();
+const spinner = new Spinner();
+const tasks = new Tasks();
+const notes = new Notes();
+
 
 
 

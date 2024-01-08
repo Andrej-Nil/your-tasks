@@ -8,7 +8,7 @@
   transform: translateY(-110%);
   width: 100%;
   transition: 0.3s ease-in-out;
-z-index: 10;
+  z-index: 10;
   border-radius: 5px;
   box-shadow: 0 12px 14px -6px rgba(0, 0, 0, 0.3);
   &.open{
@@ -16,11 +16,31 @@ z-index: 10;
   }
 }
 
+.note-marker__top{
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.note-marker__message{
+  width: 100%;
+}
+
+.note-marker__error{
+  color: #c01d1d;
+  font-size: 14px;
+  font-weight: 500;
+}
+
 .note-marker__close{
   width: 28px;
   height: 28px;
-  margin-left: auto;
-  margin-bottom: 10px;
+
+}
+
+.note-marker__body{
+
 }
 
 .note-marker__input{

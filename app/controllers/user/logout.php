@@ -1,6 +1,4 @@
 <?php
-if(isset($_SESSION['user'])){
-    unset($_SESSION['user']);
-}
-
+$auth = \classes\App::get(\classes\Auth::class);
+$auth->logout();
 redirect(LOGIN_PAGE);

@@ -1,15 +1,21 @@
 <div id="noteStore" class="note-store">
-  <div id="noteMaker" class="note-marker">
-    <button data-maker-close class="note-marker__close btn btn--icon">
-      <img src="<?= IMG . '/icons/close.svg' ?>" class="btn__icon" alt="">
-    </button>
-    <form action="post">
-      <textarea data-maker-input class="note-marker__input input" rows="6" placeholder="Текст заметки"></textarea>
+  <form id="noteMaker" action="" method="post" class="note-marker">
+    <div class="note-marker__top">
+      <div data-messages class="note-marker__message">
+
+      </div>
+      <button type="button" data-maker-close class="note-marker__close btn btn--icon">
+        <img src="<?= IMG . '/icons/close.svg' ?>" class="btn__icon" alt="">
+      </button>
+    </div>
+
+    <div  class="note-marker__body">
+      <textarea data-maker-input class="note-marker__input input" name="text" rows="6" placeholder="Текст заметки"></textarea>
       <div class="note-marker__controls">
         <div class="note-marker__colors">
           <div class="checkbox">
             <label clas="checkbox__label">
-              <input type="radio" class="checkbox__input" name="color" value="0" checked>
+              <input type="radio" class="checkbox__input" name="color" value="white" >
               <span class="checkbox__fake checkbox-color">
                  <span class="checkbox-color__paint white"></span>
               </span>
@@ -17,7 +23,7 @@
           </div>
           <div class="checkbox">
             <label clas="checkbox__label">
-              <input type="radio" class="checkbox__input" name="color" value="0">
+              <input type="radio" class="checkbox__input" name="color" value="yellow">
               <span class="checkbox__fake checkbox-color">
                 <span class="checkbox-color__paint yellow"></span>
               </span>
@@ -26,7 +32,7 @@
 
           <div class="checkbox">
             <label clas="checkbox__label">
-              <input type="radio" class="checkbox__input" name="color" value="0">
+              <input type="radio" class="checkbox__input" name="color" value="green">
               <span class="checkbox__fake checkbox-color">
                 <span class="checkbox-color__paint green"></span>
               </span>
@@ -35,7 +41,7 @@
 
           <div class="checkbox">
             <label clas="checkbox__label">
-              <input type="radio" class="checkbox__input" name="color" value="0">
+              <input type="radio" class="checkbox__input" name="color" value="blue">
               <span class="checkbox__fake checkbox-color">
                 <span class="checkbox-color__paint blue"></span>
               </span>
@@ -44,7 +50,7 @@
 
           <div class="checkbox">
             <label clas="checkbox__label">
-              <input type="radio" class="checkbox__input" name="color" value="0">
+              <input type="radio" class="checkbox__input" name="color" value="red">
               <span class="checkbox__fake checkbox-color">
                 <span class="checkbox-color__paint red"></span>
               </span>
@@ -53,8 +59,8 @@
         </div>
         <button class="note-marker__btn btn btn--action">Создать</button>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
     <p class="note-store__title">Быстрые заметки</p>
 
   <div class="note-store__controls">

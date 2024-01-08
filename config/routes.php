@@ -23,6 +23,10 @@ $router->patch('api/tasks/complete','task/api.complete.php' )->only('auth');
 $router->patch('api/tasks/cancel','task/api.cancel.php' )->only('auth');
 $router->patch('api/tasks/resume','task/api.resume.php' )->only('auth');
 
+// ------------------------------------------
+
+//note routes api
+$router->post('api/notes/store', 'note/api.store.php')->only('auth');
 
 
 // ------------------------------------------

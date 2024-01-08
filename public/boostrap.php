@@ -4,6 +4,7 @@ use classes\ServiceContainer;
 use classes\App;
 use classes\Db;
 use classes\Validator;
+use classes\Auth;
 $container = new ServiceContainer();
 
 $container->setServices(Db::class, function () {
@@ -13,6 +14,10 @@ $container->setServices(Db::class, function () {
 
 $container->setServices(Validator::class, function () {
     return new Validator();
+});
+
+$container->setServices(\classes\Auth::class, function() {
+    return new Auth();
 });
 
 App::setContainer($container);
