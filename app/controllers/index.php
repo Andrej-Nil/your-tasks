@@ -13,7 +13,8 @@ $pagination = new \classes\Pagination((int)$page, $perPage, $totalPage);
 $start = $pagination->getStart();
 $links = $pagination->getLinks();
 
-$tasks = $db->query("SELECT * FROM `tasks` WHERE `user_id`=? AND `status` NOT IN (?, ?) ORDER BY `date_creating` DESC LIMIT $start, $perPage", $values)->findAll();
+$tasks = $db->query("SELECT * FROM `tasks` WHERE `user_id`=? AND `status` NOT IN (?, ?) ORDER BY `id` DESC LIMIT $start, $perPage", $values)->findAll();
+$notes = $db->query("SELECT * FROM `notes` WHERE `user_id`=? ORDER BY `id` DESC", [$user['id']])->findAll();
 
 require_once VIEWS . '/home.tpl.php';
 

@@ -382,14 +382,21 @@ class NoteController{
         e.preventDefault()
         const $form = e.target;
         const formData = new FormData($form);
-
+        // this.view.spinner()
         const res = await this.model.store(formData);
         if(res.success){
-console.log(res)
+            this.successHandler(res.data)
         } else if(res.error){
             this.errorHandler(res.error, $form)
         }
 
+    }
+
+
+    successHandler =  (data) => {
+        this.view.closeMaker();
+        this.view.create(data);
+        this.view.clearForm();
     }
 
     errorHandler = (errors, $form) => {
@@ -419,7 +426,10 @@ console.log(res)
 
     }
 
+
+
     listeners = () => {
+
         document.addEventListener('submit', this.submitHandler)
         document.addEventListener('click', this.clickHandler)
     }
@@ -452,14 +462,17 @@ class NoteView extends Render{
         this.$maker = document.querySelector('#noteMaker');
         this.$noteList = document.querySelector('#noteList');
         this.$input = this.$maker.querySelector('[data-maker-input]');
+        // this.$radioList = this.$maker.querySelectorAll('[data-maker-color]')
         this.$messages = this.$maker.querySelector('[data-messages]');
         this.isOpenForm = false;
+
+
     }
 
     openMaker = () => {
         this.$maker.classList.add('open');
         this.isOpenForm = true;
-        this.$input.focus()
+        this.$input.focus();
     }
 
     closeMaker = () => {
@@ -476,10 +489,39 @@ class NoteView extends Render{
         this.clear(this.$messages);
     }
 
+    clearForm = () => {
+        setTimeout(() => {
+            this.$maker.reset();
+        }, 300);
+
+
+    }
+
+
+
+    create = (data) => {
+        this.render(this.$noteList, this.getNoteHtml, data, false, 'afterbegin');
+    }
+
+    getNoteHtml = (data) => {
+        return `
+             <div data-note="${data.id}" class="note-card ${data.color}">
+              <div class="note-card__text">
+                  ${data.text}
+              </div>
+              <button data-delete-note class="note-card__btn btn btn--icon">
+                  <img src="./assets/img/icons/trash.svg" alt="" class="btn__icon">
+              </button>
+          </div>
+        `
+    }
+
 
     getErrorMakerHtml = (error) => {
         return `<p class="note-marker__error">${error}</p>`
     }
+
+
 }
 
 

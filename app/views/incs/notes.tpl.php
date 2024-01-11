@@ -15,7 +15,7 @@
         <div class="note-marker__colors">
           <div class="checkbox">
             <label clas="checkbox__label">
-              <input type="radio" class="checkbox__input" name="color" value="white" >
+              <input data-maker-color type="radio" class="checkbox__input" name="color" value="white" checked>
               <span class="checkbox__fake checkbox-color">
                  <span class="checkbox-color__paint white"></span>
               </span>
@@ -23,34 +23,31 @@
           </div>
           <div class="checkbox">
             <label clas="checkbox__label">
-              <input type="radio" class="checkbox__input" name="color" value="yellow">
+              <input data-maker-radio type="radio" class="checkbox__input" name="color" value="yellow">
               <span class="checkbox__fake checkbox-color">
                 <span class="checkbox-color__paint yellow"></span>
               </span>
             </label>
           </div>
-
           <div class="checkbox">
             <label clas="checkbox__label">
-              <input type="radio" class="checkbox__input" name="color" value="green">
+              <input data-maker-color type="radio" class="checkbox__input" name="color" value="green">
               <span class="checkbox__fake checkbox-color">
                 <span class="checkbox-color__paint green"></span>
               </span>
             </label>
           </div>
-
           <div class="checkbox">
             <label clas="checkbox__label">
-              <input type="radio" class="checkbox__input" name="color" value="blue">
+              <input data-maker-color type="radio" class="checkbox__input" name="color" value="blue">
               <span class="checkbox__fake checkbox-color">
                 <span class="checkbox-color__paint blue"></span>
               </span>
             </label>
           </div>
-
           <div class="checkbox">
             <label clas="checkbox__label">
-              <input type="radio" class="checkbox__input" name="color" value="red">
+              <input data-maker-color type="radio" class="checkbox__input" name="color" value="red">
               <span class="checkbox__fake checkbox-color">
                 <span class="checkbox-color__paint red"></span>
               </span>
@@ -77,14 +74,18 @@
 <!--    </form>-->
 
   <div id="noteList" class="note-list">
-    <div data-note class="note-card">
-      <div class="note-card__text">
-        Lorem ipsum dolor.
-      </div>
-      <button class="note-card__btn btn btn--icon">
-        <img src="<?= IMG . '/icons/trash.svg' ?>" alt="" class="btn__icon">
-      </button>
-    </div>
+
+      <?php foreach ($notes as $note): ?>
+          <div data-note="<?= $note['id'] ?>" class="note-card <?= $note['color'] ?>">
+              <div class="note-card__text">
+                  <?= $note['text'] ?>
+              </div>
+              <button class="note-card__btn btn btn--icon">
+                  <img src="<?= IMG . '/icons/trash.svg' ?>" alt="" class="btn__icon">
+              </button>
+          </div>
+      <?php endforeach; ?>
+
   </div>
 
 

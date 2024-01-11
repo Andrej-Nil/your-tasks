@@ -18,8 +18,6 @@ class Validator
         'unique' => 'Пользователь с такой почтой уже существует'
     ];
 
-
-
     public function validate($data = [], $rules = []){
         $this->data_items = $data;
         foreach ($data as $fieldname => $value) {
