@@ -7,7 +7,6 @@ class Service {
         this.PUT = 'PUT';
         this.PATCH = 'PATCH'
         this.DELETE = 'DELETE';
-        this.DELETE = 'DELETE';
     }
 
     patch = async (api, data) => {
@@ -28,6 +27,20 @@ class Service {
     }
 
     post = async (api, data) => {
+        const response = await this.getData(api, this.POST, data);
+        if (response.ok) {
+            return await response.json()
+        } else {
+            return {error: 'Что то пошло не так! Поробуйте позже.'};
+        }
+    }
+
+    destroy = async (api, data) => {
+        if(data instanceof FormData){
+            data.append('_method', this.DELETE);
+        } else {
+            data._method = this.DELETE;
+        }
         const response = await this.getData(api, this.POST, data);
         if (response.ok) {
             return await response.json()
@@ -385,22 +398,45 @@ class NoteController{
         // this.view.spinner()
         const res = await this.model.store(formData);
         if(res.success){
-            this.successHandler(res.data)
+            this.successCreate(res.data)
         } else if(res.error){
-            this.errorHandler(res.error, $form)
+            this.errorCreate(res.error, $form)
         }
 
     }
 
+   deleteHandler = async ($target) => {
+       const $note = $target.closest('[data-note]');
+       const id = $note.dataset.note;
 
-    successHandler =  (data) => {
+       const $result = await this.model.delete({id});
+       if ($result.success) {
+            this.successDelete($result)
+       } else if ($result.error) {
+           this.errorDelete($result.error)
+       }
+
+   }
+
+
+
+
+       successCreate =  (data) => {
         this.view.closeMaker();
         this.view.create(data);
         this.view.clearForm();
     }
 
-    errorHandler = (errors, $form) => {
+       errorCreate = (errors, $form) => {
         this.view.formErrors(errors, $form);
+    }
+
+    successDelete = (data) => {
+        this.view.deleteNote(data.data.id)
+    }
+
+    errorDelete = (error) => {
+        console.log(error)
     }
 
 
@@ -413,11 +449,13 @@ class NoteController{
 
     }
 
-    clickHandler = (e) => {
+    clickHandler = async (e) => {
         if(e.target.closest('[data-maker-open]')){
             this.view.openMaker();
         } else if(e.target.closest('[data-maker-close]')){
             this.view.closeMaker();
+        } else if(e.target.closest('[data-delete-note]')) {
+            await this.deleteHandler(e.target);
         }
 
         // if(!e.target.closest('#noteMaker') && this.isOpen){
@@ -440,11 +478,15 @@ class NoteModel extends Service{
         super();
         this.base = 'api/notes';
         this.createApi = this.base + '/store'
+        this.destroyApi = this.base + '/delete'
     }
 
     store = async (data) => {
         return await this.post(this.createApi, data);
+    }
 
+    delete = async (data) => {
+        return await this.destroy(this.destroyApi, data)
     }
 
 
@@ -495,6 +537,11 @@ class NoteView extends Render{
         }, 300);
 
 
+    }
+
+    deleteNote = (id) => {
+        const $note = this.$noteList.querySelector(`[data-note='${id}']`);
+        this.delete($note);
     }
 
 

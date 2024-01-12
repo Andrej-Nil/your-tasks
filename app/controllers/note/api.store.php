@@ -27,9 +27,6 @@ if (!$validation->hasErrors()) {
         $user['id']
     ];
 
-    $data['id'] = 123;
-
-
     $id = $db->query(
         'INSERT INTO notes (`text`, `color`, `user_id`) VALUES (?,?,?)',
         $values)->getInsertId();

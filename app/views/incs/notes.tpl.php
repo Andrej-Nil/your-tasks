@@ -80,7 +80,7 @@
               <div class="note-card__text">
                   <?= $note['text'] ?>
               </div>
-              <button class="note-card__btn btn btn--icon">
+              <button data-delete-note class="note-card__btn btn btn--icon">
                   <img src="<?= IMG . '/icons/trash.svg' ?>" alt="" class="btn__icon">
               </button>
           </div>
