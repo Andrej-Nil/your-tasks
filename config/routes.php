@@ -28,6 +28,7 @@ $router->patch('api/tasks/resume','task/api.resume.php' )->only('auth');
 //note routes api
 $router->post('api/notes/store', 'note/api.store.php')->only('auth');
 $router->delete('api/notes/delete', 'note/api.destroy.php')->only('auth');
+$router->delete('api/notes/delete/all', 'note/api.destroy-all.php')->only('auth');
 
 
 // ------------------------------------------

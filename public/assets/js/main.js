@@ -418,9 +418,16 @@ class NoteController{
 
    }
 
+    deleteAllHandler = async () => {
+        const $result = await this.model.deleteAll();
+        console.log($result)
+        if ($result.success) {
+            this.view.clearList()
+        } else if ($result.error) {
+            this.errorDelete($result.error)
+        }
 
-
-
+    }
        successCreate =  (data) => {
         this.view.closeMaker();
         this.view.create(data);
@@ -456,6 +463,8 @@ class NoteController{
             this.view.closeMaker();
         } else if(e.target.closest('[data-delete-note]')) {
             await this.deleteHandler(e.target);
+        } else if(e.target.closest('[data-delete-all]')){
+            await this.deleteAllHandler();
         }
 
         // if(!e.target.closest('#noteMaker') && this.isOpen){
@@ -479,6 +488,7 @@ class NoteModel extends Service{
         this.base = 'api/notes';
         this.createApi = this.base + '/store'
         this.destroyApi = this.base + '/delete'
+        this.destroyAlLApi = this.base + '/delete/all'
     }
 
     store = async (data) => {
@@ -487,6 +497,10 @@ class NoteModel extends Service{
 
     delete = async (data) => {
         return await this.destroy(this.destroyApi, data)
+    }
+
+    deleteAll = async () => {
+        return await this.destroy(this.destroyAlLApi, {});
     }
 
 
@@ -537,6 +551,10 @@ class NoteView extends Render{
         }, 300);
 
 
+    }
+
+    clearList = () => {
+        this.clear(this.$noteList);
     }
 
     deleteNote = (id) => {

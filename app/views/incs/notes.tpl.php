@@ -65,26 +65,21 @@
     <button data-maker-open class="note-store__btn btn btn--action">Добавить</button>
   </div>
 
-<!--    <form class="note-create" method="post">-->
-<!--      <input type="hidden" name="_method" value="PUT">-->
-<!--      <input class="note-create__input input" placeholder="Текст заметки"/>-->
-<!--      <button data-action="activate" class="note-create__btn btn btn--icon btn--action">-->
-<!--        +-->
-<!--      </button>-->
-<!--    </form>-->
 
   <div id="noteList" class="note-list">
-
       <?php foreach ($notes as $note): ?>
-          <div data-note="<?= $note['id'] ?>" class="note-card <?= $note['color'] ?>">
-              <div class="note-card__text">
-                  <?= $note['text'] ?>
-              </div>
-              <button data-delete-note class="note-card__btn btn btn--icon">
-                  <img src="<?= IMG . '/icons/trash.svg' ?>" alt="" class="btn__icon">
-              </button>
+        <div data-note="<?= $note['id'] ?>" class="note-card <?= $note['color'] ?>">
+          <div class="note-card__text">
+            <?= $note['text'] ?>
           </div>
+          <button data-delete-note class="note-card__btn">
+            <img src="<?= IMG . '/icons/trash.svg' ?>" alt="" class="btn__icon">
+          </button>
+        </div>
       <?php endforeach; ?>
+
+
+
 
   </div>
 

@@ -21,10 +21,20 @@
 .note-store__controls{
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .note-store__btn{
   font-size: 14px;
   padding: 5px 15px;
+}
+
+.note-list{
+  padding-top: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.note-list__message{
+  text-align: center;
+  color: #222222;
 }
