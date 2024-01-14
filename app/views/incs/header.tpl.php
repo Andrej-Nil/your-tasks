@@ -45,4 +45,4 @@
             </div>
         </div>
     </header>
-    <?php getAlerts(); ?>
+<!--    --><?php //getAlerts(); ?>

@@ -35,6 +35,7 @@
         </div>
     </div>
 </footer>
+<?php require_once VIEWS . '/incs/message_module.tpl.php'?>
 </div>
 <script src="../assets/js/main.js"></script>
 </body>
