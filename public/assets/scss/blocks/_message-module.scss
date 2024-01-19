@@ -1,28 +1,41 @@
 .message-module{
   position: fixed;
   bottom: 0;
+  //transition: ;
   right: 20px;
   max-width: 320px;
+
+  height: 200px;
 }
 
 .message-card{
+  margin-bottom: 15px;
+  &.error .message-card__inner{
+    background: #fcc;
+  }
+
+  &.success .message-card__inner{
+    background: #cfc;
+  }
+
+}
+
+.message-card__inner{
+  position: relative;
   width: 100%;
   padding:  15px;
   background: #fff;
 
   border-radius: 5px;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
-  margin-bottom: 15px;
-  &.error{
-    background: #fcc;
-  }
 
-  &.success{
-    background: #cfc;
-  }
-
-
-
+  //&.error{
+  //  background: #fcc;
+  //}
+  //
+  //&.success{
+  //  background: #cfc;
+  //}
 }
 
 .message-card__top{

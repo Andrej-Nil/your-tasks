@@ -2,6 +2,9 @@
 
     <div class="wrapper container">
         <h1 class="main-title">Профиль</h1>
+        <div class="profile">
+
+        </div>
 
 
     </div>

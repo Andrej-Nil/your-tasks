@@ -376,7 +376,6 @@ class Notes{
 
 
 
-
 class NoteController{
     constructor() {
         this.$noteStore = document.querySelector('#noteStore');
@@ -589,12 +588,46 @@ class NoteView extends Render{
 
 }
 
+class MessageModule{
+    constructor() {
+        this.$module = document.querySelector('#messageModule');
+        this.init();
+
+    }
+
+    init = () => {
+
+        if(!this.$module) return;
+        this.$add  = document.querySelector('#add');
+        this.listeners();
+    }
+
+    add = () => {
+        console.log('dfkjhg')
+    }
+
+    delete = () => {
 
 
+    }
+
+    clickHandler = (e) => {
+
+    }
+
+
+    listeners = () => {
+        document.addEventListener('click', this.clickHandler)
+        this.$add.addEventListener('click', this.add)
+    }
+
+}
 // const log = new Log();
 const spinner = new Spinner();
 const tasks = new Tasks();
 const notes = new Notes();
+
+const messageModule = new MessageModule()
 
 
 

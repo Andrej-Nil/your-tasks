@@ -33,7 +33,7 @@ $router->delete('api/notes/delete/all', 'note/api.destroy-all.php')->only('auth'
 
 // ------------------------------------------
 // user
-$router->get('user/show', 'user/show.php')->only('auth');
+//$router->get('user/show', 'user/show.php')->only('auth');
 
 $router->get('register', 'user/register.php')->only('guest');
 $router->post('register', 'user/store.php')->only('guest');
@@ -41,6 +41,7 @@ $router->post('register', 'user/store.php')->only('guest');
 $router->get('login', 'user/login.php')->only('guest');
 $router->post('login', 'user/login.php')->only('guest');
 $router->get('logout', 'user/logout.php')->only('auth');
+$router->get('profile', 'user/profile.php')->only('auth');
 
 
 
