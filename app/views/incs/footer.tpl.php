@@ -35,8 +35,8 @@
         </div>
     </div>
 </footer>
-<?php //require_once VIEWS . '/incs/message_module.tpl.php'?>
-<!--<button id="add" class="btn btn--error" style="width: 300px">add</button>-->
+<?php require_once VIEWS . '/incs/message_module.tpl.php'?>
+<button id="add" class="btn btn--error" style="width: 300px">add</button>
 </div>
 
 <script src="../assets/js/main.js"></script>

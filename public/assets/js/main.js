@@ -11,7 +11,7 @@ class Service {
 
     patch = async (api, data) => {
 
-        if(data instanceof FormData){
+        if (data instanceof FormData) {
             data.append('_method', this.PATCH);
         } else {
             data._method = this.PATCH;
@@ -36,7 +36,7 @@ class Service {
     }
 
     destroy = async (api, data) => {
-        if(data instanceof FormData){
+        if (data instanceof FormData) {
             data.append('_method', this.DELETE);
         } else {
             data._method = this.DELETE;
@@ -56,7 +56,7 @@ class Service {
         })
     }
 
-    createFormData = (data) =>{
+    createFormData = (data) => {
         const formData = new FormData();
         for (let key in data) {
             formData.append(`${key}`, data[key])
@@ -142,13 +142,13 @@ class TaskController {
         const type = $btn.dataset.action;
         const id = this.getId($task);
         const res = await this.model.action({id, type});
-            if (res.success) {
-                this.view.hideSpinner($task);
-                this.view.changeStatusHandler($task, res);
-            } else if (res.error) {
-                this.view.hideSpinner($task);
-                console.log(res);
-            }
+        if (res.success) {
+            this.view.hideSpinner($task);
+            this.view.changeStatusHandler($task, res);
+        } else if (res.error) {
+            this.view.hideSpinner($task);
+            console.log(res);
+        }
     }
 
     getId = ($task) => {
@@ -227,20 +227,20 @@ class TaskView extends Render {
 
     addActivateBtn = (data, $task) => {
         const props = {
-            action:'pause',
+            action: 'pause',
             icon: data.icon
         }
         const $controlsBlock = $task.querySelector('[data-controls]');
-        this.render($controlsBlock, this.getActionBtnHtml, props, false,  'afterBegin');
+        this.render($controlsBlock, this.getActionBtnHtml, props, false, 'afterBegin');
     }
 
     addCompleteBtn = (data, $task) => {
-       const props = {
-           action:'complete',
-           icon: data.completeIcon
-       }
+        const props = {
+            action: 'complete',
+            icon: data.completeIcon
+        }
         const $controlsBlock = $task.querySelector('[data-controls]');
-        this.render($controlsBlock, this.getActionBtnHtml, props, false,  'afterBegin');
+        this.render($controlsBlock, this.getActionBtnHtml, props, false, 'afterBegin');
     }
 
     changePauseBtn = (data, $task) => {
@@ -270,7 +270,7 @@ class TaskView extends Render {
         const $buttons = $task.querySelectorAll('[data-action]');
 
         $buttons.forEach(($item) => {
-            if($item.dataset.action === except) return;
+            if ($item.dataset.action === except) return;
             this.delete($item);
         })
     }
@@ -308,15 +308,14 @@ class TaskView extends Render {
         this.addActivateBtn(data, $task);
 
 
-
     }
 
     changeColor = (data, $task) => {
         const isOverdue = data.isOverdue;
-        this.statusList.forEach( (item) => {
+        this.statusList.forEach((item) => {
             $task.classList.remove(item);
         });
-        if(isOverdue) {
+        if (isOverdue) {
             $task.classList.add(isOverdue)
         } else {
             $task.classList.add(data.status)
@@ -325,7 +324,7 @@ class TaskView extends Render {
 
     changeStatusHandler = ($task, response) => {
         const data = response.data;
-        switch (response.data.action){
+        switch (response.data.action) {
             case 'activate': {
                 this.activate(data, $task);
                 break;
@@ -346,7 +345,7 @@ class TaskView extends Render {
                 this.resume(data, $task);
                 break;
             }
-            default:{
+            default: {
                 break;
             }
         }
@@ -362,21 +361,20 @@ class TaskView extends Render {
 }
 
 
-class Tasks{
+class Tasks {
     constructor() {
         this.taskController = new TaskController();
     }
 }
 
-class Notes{
+class Notes {
     constructor() {
         const noteController = new NoteController();
     }
 }
 
 
-
-class NoteController{
+class NoteController {
     constructor() {
         this.$noteStore = document.querySelector('#noteStore');
         this.init()
@@ -384,9 +382,9 @@ class NoteController{
     }
 
     init = () => {
-        if(!this.$noteStore) return;
+        if (!this.$noteStore) return;
         this.model = new NoteModel();
-        this.view = new NoteView( this.$noteStore);
+        this.view = new NoteView(this.$noteStore);
         this.listeners();
     }
 
@@ -396,26 +394,26 @@ class NoteController{
         const formData = new FormData($form);
         // this.view.spinner()
         const res = await this.model.store(formData);
-        if(res.success){
+        if (res.success) {
             this.successCreate(res.data)
-        } else if(res.error){
+        } else if (res.error) {
             this.errorCreate(res.error, $form)
         }
 
     }
 
-   deleteHandler = async ($target) => {
-       const $note = $target.closest('[data-note]');
-       const id = $note.dataset.note;
+    deleteHandler = async ($target) => {
+        const $note = $target.closest('[data-note]');
+        const id = $note.dataset.note;
 
-       const $result = await this.model.delete({id});
-       if ($result.success) {
+        const $result = await this.model.delete({id});
+        if ($result.success) {
             this.successDelete($result)
-       } else if ($result.error) {
-           this.errorDelete($result.error)
-       }
+        } else if ($result.error) {
+            this.errorDelete($result.error)
+        }
 
-   }
+    }
 
     deleteAllHandler = async () => {
         const $result = await this.model.deleteAll();
@@ -427,13 +425,13 @@ class NoteController{
         }
 
     }
-       successCreate =  (data) => {
+    successCreate = (data) => {
         this.view.closeMaker();
         this.view.create(data);
         this.view.clearForm();
     }
 
-       errorCreate = (errors, $form) => {
+    errorCreate = (errors, $form) => {
         this.view.formErrors(errors, $form);
     }
 
@@ -446,9 +444,8 @@ class NoteController{
     }
 
 
-
     submitHandler = async (e) => {
-        if(e.target.closest('#noteMaker')){
+        if (e.target.closest('#noteMaker')) {
             await this.sendForm(e)
         }
 
@@ -456,13 +453,13 @@ class NoteController{
     }
 
     clickHandler = async (e) => {
-        if(e.target.closest('[data-maker-open]')){
+        if (e.target.closest('[data-maker-open]')) {
             this.view.openMaker();
-        } else if(e.target.closest('[data-maker-close]')){
+        } else if (e.target.closest('[data-maker-close]')) {
             this.view.closeMaker();
-        } else if(e.target.closest('[data-delete-note]')) {
+        } else if (e.target.closest('[data-delete-note]')) {
             await this.deleteHandler(e.target);
-        } else if(e.target.closest('[data-delete-all]')){
+        } else if (e.target.closest('[data-delete-all]')) {
             await this.deleteAllHandler();
         }
 
@@ -473,7 +470,6 @@ class NoteController{
     }
 
 
-
     listeners = () => {
 
         document.addEventListener('submit', this.submitHandler)
@@ -481,7 +477,7 @@ class NoteController{
     }
 }
 
-class NoteModel extends Service{
+class NoteModel extends Service {
     constructor() {
         super();
         this.base = 'api/notes';
@@ -505,7 +501,7 @@ class NoteModel extends Service{
 
 }
 
-class NoteView extends Render{
+class NoteView extends Render {
     constructor($noteStore) {
         super();
         this.$noteStore = $noteStore;
@@ -513,7 +509,7 @@ class NoteView extends Render{
         this.init()
     }
 
-    init = () =>{
+    init = () => {
         this.$maker = document.querySelector('#noteMaker');
         this.$noteList = document.querySelector('#noteList');
         this.$input = this.$maker.querySelector('[data-maker-input]');
@@ -535,7 +531,7 @@ class NoteView extends Render{
         this.isOpenForm = false;
     }
 
-    formErrors(errors){
+    formErrors(errors) {
         this.clearMessages();
         this.render(this.$messages, this.getErrorMakerHtml, false, errors)
     }
@@ -560,7 +556,6 @@ class NoteView extends Render{
         const $note = this.$noteList.querySelector(`[data-note='${id}']`);
         this.delete($note);
     }
-
 
 
     create = (data) => {
@@ -588,40 +583,101 @@ class NoteView extends Render{
 
 }
 
-class MessageModule{
+class MessageModuleView extends Render{
+    constructor($module) {
+        super();
+
+        this.$module = $module;
+    }
+
+    add = (data) => {
+        this.render(this.$module, this.getMessageHtml, data);
+    }
+
+    showMessage = ($message) => {
+
+        const $messageInner =  $message.querySelector('[data-inner]');
+        const messageInnerHeight =  $messageInner.getBoundingClientRect().height;
+        $message.style.height = messageInnerHeight + 'px';
+
+    }
+
+    hideMessage = ($message) => {
+        $message.style.height = '0';
+        $message.style.opacity = '0';
+    }
+
+    delete = ($message) => {
+        setTimeout(() => {
+            this.delete($message);
+        }, 300)
+    }
+
+    getMessageHtml = () => {
+        return `
+            <div data-message class="message-card success" style="height: 0">
+                <div data-inner class="message-card__inner">
+                    <div class="message-card__content">
+                        <div class="message-card__top">
+                            <div class="message-card__title">Ошибка</div>
+                            <button type="button" data-delete class="message-card__delete btn btn--icon">
+                                <img src="/assets/img/icons/close.svg" class="btn__icon" alt="">
+                            </button>
+                        </div>
+                        <p class="message-card__text">Произdf gfdg dfgfdо dfgdfg шла оdfgfd dsrgdfg test отри пожалуста</p>
+                    </div>
+                </div>
+            </div>
+            `
+    }
+}
+
+
+class MessageModule {
     constructor() {
         this.$module = document.querySelector('#messageModule');
         this.init();
-
     }
 
     init = () => {
-
-        if(!this.$module) return;
-        this.$add  = document.querySelector('#add');
+        if (!this.$module) return;
+        this.view = new MessageModuleView(this.$module);
+        this.$add = document.querySelector('#add');
         this.listeners();
     }
 
-    add = () => {
-        console.log('dfkjhg')
+    addHandler = () => {
+        this.view.add()
+        const $lastMessage = this.$module.lastElementChild;
+        this.view.showMessage($lastMessage);
+        setTimeout(() => {
+            this.deleteHandler($lastMessage)
+        }, 10000);
     }
 
-    delete = () => {
 
 
+
+    deleteHandler = ($message) => {
+        if($message){
+            this.view.hideMessage($message);
+            this.view.delete($message)
+        }
     }
+
 
     clickHandler = (e) => {
-
+        if(e.target.closest('[data-delete]')){
+            this.deleteHandler(e.target.closest('[data-message]'));
+        }
     }
-
 
     listeners = () => {
-        document.addEventListener('click', this.clickHandler)
-        this.$add.addEventListener('click', this.add)
+        this.$module.addEventListener('click', this.clickHandler);
+        this.$add.addEventListener('click', this.addHandler);
     }
-
 }
+
 // const log = new Log();
 const spinner = new Spinner();
 const tasks = new Tasks();
