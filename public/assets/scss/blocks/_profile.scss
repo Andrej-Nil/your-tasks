@@ -1,0 +1,35 @@
+.profile{
+  background: #fff;
+  border-radius: 5px;
+}
+
+.profile__tab{
+  padding: 15px;
+
+}
+
+.profile__title {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.profile-block{
+  margin-bottom: 20px;
+}
+.profile-block__title{
+  margin-bottom: 15px;
+
+}
+
+.profile-block__content{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr );
+  gap: 15px;
+}
+
+.profile-task-list{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+

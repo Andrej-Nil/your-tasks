@@ -16,27 +16,27 @@
                       <?php if ($task['description']): ?>
                          <p class="task__desc"><?= h($task['description']) ?></p>
                       <?php endif; ?>
-                         <div class="task__info">
-                              <div class="task-row">
-                                  <span class="task-row__label">Статус:</span>
-                                  <span data-status-text class="task-row__value"><?= getTaskStatusWord($task['status']) ?></span>
+                         <div class="task-info">
+                              <div class="task-info-row">
+                                  <span class="task-info-row__label">Статус:</span>
+                                  <span data-status-text class="task-info-row__value"><?= getTaskStatusWord($task['status']) ?></span>
                               </div>
                              <?php if ($task['date_ending']): ?>
-                             <div class="task-row">
-                                 <span class="task-row__label">Дата выволнения:</span>
-                                 <span class="task-row__value"><?= $task['date_ending'] ?></span>
+                             <div class="task-info-row">
+                                 <span class="task-info-row__label">Дата выволнения:</span>
+                                 <span class="task-info-row__value"><?= $task['date_ending'] ?></span>
                              </div>
                              <?php endif; ?>
 
-                             <div class="task-row">
-                                 <span class="task-row__label">Дата сдачи:</span>
-                                 <span class="task-row__value"><?= $task['deadline'] ?? 'Не указано' ?></span>
+                             <div class="task-info-row">
+                                 <span class="task-info-row__label">Дата сдачи:</span>
+                                 <span class="task-info-row__value"><?= $task['deadline'] ?? 'Не указано' ?></span>
                              </div>
 
                               <?php if (!$task['date_ending'] && $task['deadline']): ?>
-                             <div class="task-row">
-                                  <span class="task-row__label">Дней до сдачи:</span>
-                                  <span class="task-row__value"><?= timeLeft($task['deadline'])  ?></span>
+                             <div class="task-info-row">
+                                  <span class="task-info-row__label">Дней до сдачи:</span>
+                                  <span class="task-info-row__value"><?= timeLeft($task['deadline'])  ?></span>
                              </div>
                               <?php endif; ?>
                          </div>

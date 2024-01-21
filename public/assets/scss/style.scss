@@ -26,6 +26,8 @@
 @import "blocks/content";
 @import "blocks/main";
 @import "blocks/welcome";
+@import "blocks/profile";
+@import "blocks/profile-info";
 
 @import "blocks/pagination";
 
@@ -34,10 +36,12 @@
 @import "blocks/message-block";
 @import "blocks/task-list";
 @import "blocks/task-card";
+@import "blocks/task-row";
 @import "blocks/task";
 
 
 @import "blocks/sidebar";
+@import "blocks/sidebar-nav";
 @import "blocks/note-store";
 @import "blocks/note-marker";
 @import "blocks/note-card";
