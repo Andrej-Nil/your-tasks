@@ -3,23 +3,43 @@
   border-radius: 5px;
 }
 
+
+
 .profile__tab{
   padding: 15px;
-
+  display: none;
+  &.active{
+    display: block;
+  }
 }
-
+.profile__form{
+  padding: 0;
+}
 .profile__title {
   font-size: 20px;
   margin-bottom: 15px;
+  &.bold{
+    font-weight: 700;
+  }
+
+}
+
+.profile__text{
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .profile-block{
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 .profile-block__title{
   margin-bottom: 15px;
-
+  &.bold{
+    font-weight: 700;
+  }
 }
+
+
 
 .profile-block__content{
   display: grid;
