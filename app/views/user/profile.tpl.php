@@ -2,10 +2,10 @@
 
 <div class="wrapper container">
     <h1 class="main-title">Профиль</h1>
-    <div class="content">
-        <div class="main">
+    <div id="tabContainer" class="content">
+        <div id="tabContainer" class="main">
             <div class="profile">
-                <div id="personal" class="profile__tab ">
+                <div data-tab="personal" class="profile__tab  active">
                     <p class="profile__title">Личные данные</p>
                     <div class="profile-block">
                         <div class="profile-info profile-info--row">
@@ -166,7 +166,7 @@
                     </div>
                 </div>
 
-                <div id="editing" class="profile__tab ">
+                <div data-tab="editing" class="profile__tab ">
                     <p class="profile__title">Редактирование</p>
                     <form class="profile__form form" action="/edit" method="post">
                         <div class="form__controls">
@@ -194,7 +194,7 @@
 
 
                 </div>
-                <div id="safety" class="profile__tab ">
+                <div data-tab="safety" class="profile__tab ">
                     <p class="profile__title">Безопасность</p>
                     <form class="profile__form form" action="/edit" method="post">
                         <div class="form__controls">
@@ -227,7 +227,7 @@
 
 
                 </div>
-                <div id="deleteProfile" class="profile__tab active">
+                <div data-tab="deleteProfile" class="profile__tab">
                     <p class="profile__title">Удаления профиля</p>
 
                     <div class="profile-block">
@@ -252,11 +252,11 @@
             </div>
         </div>
         <div class="sidebar">
-            <div data-sidebar-nav class="sidebar-nav">
-                <span class="sidebar-nav__link active">Личные данные</span>
-                <span class="sidebar-nav__link">Редостировать</span>
-                <span class="sidebar-nav__link">Безопастность</span>
-                <span class="sidebar-nav__link">Удаление</span>
+            <div class="sidebar-nav">
+                <span data-tab-link="personal" class="sidebar-nav__link active">Личные данные</span>
+                <span data-tab-link="editing" class="sidebar-nav__link">Редостировать</span>
+                <span data-tab-link="safety" class="sidebar-nav__link">Безопастность</span>
+                <span data-tab-link="deleteProfile" class="sidebar-nav__link">Удаление</span>
             </div>
         </div>
 

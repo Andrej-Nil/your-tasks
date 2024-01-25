@@ -1,569 +1,569 @@
 'use strict'
 
 class Service {
-    constructor() {
-        this.POST = 'POST';
-        this.GET = 'GET';
-        this.PUT = 'PUT';
-        this.PATCH = 'PATCH'
-        this.DELETE = 'DELETE';
+  constructor() {
+    this.POST = 'POST';
+    this.GET = 'GET';
+    this.PUT = 'PUT';
+    this.PATCH = 'PATCH'
+    this.DELETE = 'DELETE';
+  }
+
+  patch = async (api, data) => {
+
+    if (data instanceof FormData) {
+      data.append('_method', this.PATCH);
+    } else {
+      data._method = this.PATCH;
     }
 
-    patch = async (api, data) => {
+    const response = await this.getData(api, this.POST, data);
 
-        if (data instanceof FormData) {
-            data.append('_method', this.PATCH);
-        } else {
-            data._method = this.PATCH;
-        }
-
-        const response = await this.getData(api, this.POST, data);
-
-        if (response.ok) {
-            return await response.json()
-        } else {
-            return {error: 'Что то пошло не так! Поробуйте позже.'};
-        }
+    if (response.ok) {
+      return await response.json()
+    } else {
+      return {error: 'Что то пошло не так! Поробуйте позже.'};
     }
+  }
 
-    post = async (api, data) => {
-        const response = await this.getData(api, this.POST, data);
-        if (response.ok) {
-            return await response.json()
-        } else {
-            return {error: 'Что то пошло не так! Поробуйте позже.'};
-        }
+  post = async (api, data) => {
+    const response = await this.getData(api, this.POST, data);
+    if (response.ok) {
+      return await response.json()
+    } else {
+      return {error: 'Что то пошло не так! Поробуйте позже.'};
     }
+  }
 
-    destroy = async (api, data) => {
-        if (data instanceof FormData) {
-            data.append('_method', this.DELETE);
-        } else {
-            data._method = this.DELETE;
-        }
-        const response = await this.getData(api, this.POST, data);
-        if (response.ok) {
-            return await response.json()
-        } else {
-            return {error: 'Что то пошло не так! Поробуйте позже.'};
-        }
+  destroy = async (api, data) => {
+    if (data instanceof FormData) {
+      data.append('_method', this.DELETE);
+    } else {
+      data._method = this.DELETE;
     }
-
-    getData = (api, method, body) => {
-        return fetch(api, {
-            method: method,
-            body: new URLSearchParams(body)
-        })
+    const response = await this.getData(api, this.POST, data);
+    if (response.ok) {
+      return await response.json()
+    } else {
+      return {error: 'Что то пошло не так! Поробуйте позже.'};
     }
+  }
 
-    createFormData = (data) => {
-        const formData = new FormData();
-        for (let key in data) {
-            formData.append(`${key}`, data[key])
-        }
-        return formData;
+  getData = (api, method, body) => {
+    return fetch(api, {
+      method: method,
+      body: new URLSearchParams(body)
+    })
+  }
 
+  createFormData = (data) => {
+    const formData = new FormData();
+    for (let key in data) {
+      formData.append(`${key}`, data[key])
     }
+    return formData;
+
+  }
 
 }
 
 class Render {
-    delete = ($element) => {
-        if (!$element) {
-            return;
-        }
-        $element.remove();
+  delete = ($element) => {
+    if (!$element) {
+      return;
+    }
+    $element.remove();
+  }
+
+  clear = ($element) => {
+    if (!$element) {
+      return;
+    }
+    $element.innerHTML = '';
+  }
+
+  render = ($parent, getHtmlMarkup, argument = false, array = false, where = 'beforeend') => {
+    let markupAsStr = '';
+    if (!$parent) {
+      return;
     }
 
-    clear = ($element) => {
-        if (!$element) {
-            return;
-        }
-        $element.innerHTML = '';
+    if (array) {
+      array.forEach((item) => {
+        markupAsStr = markupAsStr + getHtmlMarkup(item);
+      })
+    }
+    if (argument) {
+      markupAsStr = getHtmlMarkup(argument);
     }
 
-    render = ($parent, getHtmlMarkup, argument = false, array = false, where = 'beforeend') => {
-        let markupAsStr = '';
-        if (!$parent) {
-            return;
-        }
-
-        if (array) {
-            array.forEach((item) => {
-                markupAsStr = markupAsStr + getHtmlMarkup(item);
-            })
-        }
-        if (argument) {
-            markupAsStr = getHtmlMarkup(argument);
-        }
-
-        if (!array && !argument) {
-            markupAsStr = getHtmlMarkup();
-        }
-        $parent.insertAdjacentHTML(where, markupAsStr);
+    if (!array && !argument) {
+      markupAsStr = getHtmlMarkup();
     }
+    $parent.insertAdjacentHTML(where, markupAsStr);
+  }
 }
 
 class Spinner extends Render {
 
 
-    create = ($parent) => {
-        this.render($parent, this.html);
-    }
+  create = ($parent) => {
+    this.render($parent, this.html);
+  }
 
-    destroy = ($parent) => {
-        const $spinner = $parent.querySelector('[data-spinner]');
-        this.delete($spinner);
-    }
-    html = (message = 'Идет обработка запроса!') => {
-        return `
+  destroy = ($parent) => {
+    const $spinner = $parent.querySelector('[data-spinner]');
+    this.delete($spinner);
+  }
+  html = (message = 'Идет обработка запроса!') => {
+    return `
       <div data-spinner class="spinner">
         <p class="spinner__message">${message}</p>
       </div>
     `
-    }
+  }
 }
 
 class TaskController {
-    constructor() {
-        this.init();
+  constructor() {
+    this.init();
+  }
+
+  init = () => {
+    this.model = new TaskModel();
+    this.view = new TaskView();
+    this.listeners();
+  }
+
+
+  actionHandler = async ($btn) => {
+    const $task = $btn.closest('[data-task]');
+    this.view.showSpinner($task);
+    const type = $btn.dataset.action;
+    const id = this.getId($task);
+    const res = await this.model.action({id, type});
+    if (res.success) {
+      this.view.hideSpinner($task);
+      this.view.changeStatusHandler($task, res);
+    } else if (res.error) {
+      this.view.hideSpinner($task);
+      console.log(res);
     }
+  }
 
-    init = () => {
-        this.model = new TaskModel();
-        this.view = new TaskView();
-        this.listeners();
+  getId = ($task) => {
+    return $task.dataset.task;
+  }
+
+
+  clickHandler = async (e) => {
+    if (e.target.closest("[data-action]")) {
+      await this.actionHandler(e.target.closest("[data-action]"));
     }
+  }
 
-
-    actionHandler = async ($btn) => {
-        const $task = $btn.closest('[data-task]');
-        this.view.showSpinner($task);
-        const type = $btn.dataset.action;
-        const id = this.getId($task);
-        const res = await this.model.action({id, type});
-        if (res.success) {
-            this.view.hideSpinner($task);
-            this.view.changeStatusHandler($task, res);
-        } else if (res.error) {
-            this.view.hideSpinner($task);
-            console.log(res);
-        }
-    }
-
-    getId = ($task) => {
-        return $task.dataset.task;
-    }
-
-
-    clickHandler = async (e) => {
-        if (e.target.closest("[data-action]")) {
-            await this.actionHandler(e.target.closest("[data-action]"));
-        }
-    }
-
-    listeners = () => {
-        document.addEventListener('click', this.clickHandler);
-    }
+  listeners = () => {
+    document.addEventListener('click', this.clickHandler);
+  }
 }
 
 class TaskModel extends Service {
-    constructor() {
-        super();
-        this.base = '/api/tasks/';
-        this.pauseApi = this.base + 'pause';
-        this.activateApi = this.base + 'activate';
-        this.completeApi = this.base + 'complete';
-        this.cancelApi = this.base + 'cancel';
-        this.returnApi = this.base + 'return';
+  constructor() {
+    super();
+    this.base = '/api/tasks/';
+    this.pauseApi = this.base + 'pause';
+    this.activateApi = this.base + 'activate';
+    this.completeApi = this.base + 'complete';
+    this.cancelApi = this.base + 'cancel';
+    this.returnApi = this.base + 'return';
 
-    }
+  }
 
-    action = async (data) => {
-        const api = this.base + data.type;
-        return await this.patch(api, data);
-    }
+  action = async (data) => {
+    const api = this.base + data.type;
+    return await this.patch(api, data);
+  }
 
 }
 
 class TaskView extends Render {
-    constructor() {
-        super();
-        this.init();
+  constructor() {
+    super();
+    this.init();
+  }
+
+  init = () => {
+    this.spinner = spinner;
+    this.statusList = [
+      'pause', 'active', 'completed', 'overdue', 'cancelled'
+    ];
+
+    // this.PAUSE = 'pause';
+    // this.ACTIVE = 'active';
+    // this.COMPLETED = 'completed';
+    // this.OVERDUE = 'overdue';
+    // this.CANCELLED = 'cancelled';
+  }
+
+  showSpinner = ($task) => {
+    this.spinner.create($task);
+  }
+
+  hideSpinner = ($task) => {
+    this.spinner.destroy($task);
+  }
+
+  changeStatusText = (statusText, $task) => {
+    const $statusText = $task.querySelector('[data-status-text]');
+    $statusText.innerHTML = statusText;
+  }
+
+  changeActivateBtn = (data, $task) => {
+    const $btn = $task.querySelector('[data-action="activate"]');
+    const $iconBtn = $btn.querySelector('[data-icon]');
+    $btn.dataset.action = 'pause';
+    $iconBtn.src = data.icon;
+  }
+
+  addActivateBtn = (data, $task) => {
+    const props = {
+      action: 'pause',
+      icon: data.icon
     }
+    const $controlsBlock = $task.querySelector('[data-controls]');
+    this.render($controlsBlock, this.getActionBtnHtml, props, false, 'afterBegin');
+  }
 
-    init = () => {
-        this.spinner = spinner;
-        this.statusList = [
-            'pause', 'active', 'completed', 'overdue', 'cancelled'
-        ];
-
-        // this.PAUSE = 'pause';
-        // this.ACTIVE = 'active';
-        // this.COMPLETED = 'completed';
-        // this.OVERDUE = 'overdue';
-        // this.CANCELLED = 'cancelled';
+  addCompleteBtn = (data, $task) => {
+    const props = {
+      action: 'complete',
+      icon: data.completeIcon
     }
+    const $controlsBlock = $task.querySelector('[data-controls]');
+    this.render($controlsBlock, this.getActionBtnHtml, props, false, 'afterBegin');
+  }
 
-    showSpinner = ($task) => {
-        this.spinner.create($task);
+  changePauseBtn = (data, $task) => {
+    const $btn = $task.querySelector('[data-action="pause"]');
+    const $iconBtn = $btn.querySelector('[data-icon]');
+    $btn.dataset.action = 'activate';
+    $iconBtn.src = data.icon;
+  }
+
+  changeCancelBtn = ($task) => {
+    const $btn = $task.querySelector('[data-action="cancel"]');
+    $btn.classList.remove('btn--cancel');
+    $btn.classList.add('btn--action');
+    $btn.dataset.action = 'resume';
+    $btn.innerHTML = 'Вернуть';
+  }
+
+  changeResumeBtn = ($task) => {
+    const $btn = $task.querySelector('[data-action="resume"]');
+    $btn.classList.remove('btn--action');
+    $btn.classList.add('btn--cancel');
+    $btn.dataset.action = 'cancel';
+    $btn.innerHTML = 'Отмена';
+  }
+
+  deleteActionBtn = ($task, except = '') => {
+    const $buttons = $task.querySelectorAll('[data-action]');
+
+    $buttons.forEach(($item) => {
+      if ($item.dataset.action === except) return;
+      this.delete($item);
+    })
+  }
+
+  activate = (data, $task) => {
+    this.changeColor(data, $task);
+    this.changeStatusText(data.statusText, $task);
+    this.changeActivateBtn(data, $task)
+  }
+
+  pause = (data, $task) => {
+    this.changeColor(data, $task);
+    this.changeStatusText(data.statusText, $task);
+    this.changePauseBtn(data, $task);
+  }
+
+  complete = (data, $task) => {
+    this.changeColor(data, $task);
+    this.changeStatusText(data.statusText, $task);
+    this.deleteActionBtn($task);
+  }
+
+  cancel = (data, $task) => {
+    this.changeColor(data, $task);
+    this.changeStatusText(data.statusText, $task);
+    this.deleteActionBtn($task, 'cancel');
+    this.changeCancelBtn($task);
+  }
+
+  resume = (data, $task) => {
+    this.changeColor(data, $task);
+    this.changeStatusText(data.statusText, $task);
+    this.changeResumeBtn($task);
+    this.addCompleteBtn(data, $task);
+    this.addActivateBtn(data, $task);
+
+
+  }
+
+  changeColor = (data, $task) => {
+    const isOverdue = data.isOverdue;
+    this.statusList.forEach((item) => {
+      $task.classList.remove(item);
+    });
+    if (isOverdue) {
+      $task.classList.add(isOverdue)
+    } else {
+      $task.classList.add(data.status)
     }
+  }
 
-    hideSpinner = ($task) => {
-        this.spinner.destroy($task);
+  changeStatusHandler = ($task, response) => {
+    const data = response.data;
+    switch (response.data.action) {
+      case 'activate': {
+        this.activate(data, $task);
+        break;
+      }
+      case 'pause': {
+        this.pause(data, $task);
+        break;
+      }
+      case 'complete': {
+        this.complete(data, $task);
+        break;
+      }
+      case 'cancel': {
+        this.cancel(data, $task);
+        break;
+      }
+      case 'resume': {
+        this.resume(data, $task);
+        break;
+      }
+      default: {
+        break;
+      }
     }
+  }
 
-    changeStatusText = (statusText, $task) => {
-        const $statusText = $task.querySelector('[data-status-text]');
-        $statusText.innerHTML = statusText;
-    }
-
-    changeActivateBtn = (data, $task) => {
-        const $btn = $task.querySelector('[data-action="activate"]');
-        const $iconBtn = $btn.querySelector('[data-icon]');
-        $btn.dataset.action = 'pause';
-        $iconBtn.src = data.icon;
-    }
-
-    addActivateBtn = (data, $task) => {
-        const props = {
-            action: 'pause',
-            icon: data.icon
-        }
-        const $controlsBlock = $task.querySelector('[data-controls]');
-        this.render($controlsBlock, this.getActionBtnHtml, props, false, 'afterBegin');
-    }
-
-    addCompleteBtn = (data, $task) => {
-        const props = {
-            action: 'complete',
-            icon: data.completeIcon
-        }
-        const $controlsBlock = $task.querySelector('[data-controls]');
-        this.render($controlsBlock, this.getActionBtnHtml, props, false, 'afterBegin');
-    }
-
-    changePauseBtn = (data, $task) => {
-        const $btn = $task.querySelector('[data-action="pause"]');
-        const $iconBtn = $btn.querySelector('[data-icon]');
-        $btn.dataset.action = 'activate';
-        $iconBtn.src = data.icon;
-    }
-
-    changeCancelBtn = ($task) => {
-        const $btn = $task.querySelector('[data-action="cancel"]');
-        $btn.classList.remove('btn--cancel');
-        $btn.classList.add('btn--action');
-        $btn.dataset.action = 'resume';
-        $btn.innerHTML = 'Вернуть';
-    }
-
-    changeResumeBtn = ($task) => {
-        const $btn = $task.querySelector('[data-action="resume"]');
-        $btn.classList.remove('btn--action');
-        $btn.classList.add('btn--cancel');
-        $btn.dataset.action = 'cancel';
-        $btn.innerHTML = 'Отмена';
-    }
-
-    deleteActionBtn = ($task, except = '') => {
-        const $buttons = $task.querySelectorAll('[data-action]');
-
-        $buttons.forEach(($item) => {
-            if ($item.dataset.action === except) return;
-            this.delete($item);
-        })
-    }
-
-    activate = (data, $task) => {
-        this.changeColor(data, $task);
-        this.changeStatusText(data.statusText, $task);
-        this.changeActivateBtn(data, $task)
-    }
-
-    pause = (data, $task) => {
-        this.changeColor(data, $task);
-        this.changeStatusText(data.statusText, $task);
-        this.changePauseBtn(data, $task);
-    }
-
-    complete = (data, $task) => {
-        this.changeColor(data, $task);
-        this.changeStatusText(data.statusText, $task);
-        this.deleteActionBtn($task);
-    }
-
-    cancel = (data, $task) => {
-        this.changeColor(data, $task);
-        this.changeStatusText(data.statusText, $task);
-        this.deleteActionBtn($task, 'cancel');
-        this.changeCancelBtn($task);
-    }
-
-    resume = (data, $task) => {
-        this.changeColor(data, $task);
-        this.changeStatusText(data.statusText, $task);
-        this.changeResumeBtn($task);
-        this.addCompleteBtn(data, $task);
-        this.addActivateBtn(data, $task);
-
-
-    }
-
-    changeColor = (data, $task) => {
-        const isOverdue = data.isOverdue;
-        this.statusList.forEach((item) => {
-            $task.classList.remove(item);
-        });
-        if (isOverdue) {
-            $task.classList.add(isOverdue)
-        } else {
-            $task.classList.add(data.status)
-        }
-    }
-
-    changeStatusHandler = ($task, response) => {
-        const data = response.data;
-        switch (response.data.action) {
-            case 'activate': {
-                this.activate(data, $task);
-                break;
-            }
-            case 'pause': {
-                this.pause(data, $task);
-                break;
-            }
-            case 'complete': {
-                this.complete(data, $task);
-                break;
-            }
-            case 'cancel': {
-                this.cancel(data, $task);
-                break;
-            }
-            case 'resume': {
-                this.resume(data, $task);
-                break;
-            }
-            default: {
-                break;
-            }
-        }
-    }
-
-    getActionBtnHtml = (props) => {
-        return `
+  getActionBtnHtml = (props) => {
+    return `
             <button data-action="${props.action}" class="btn btn--icon">
                 <img data-icon class="btn__icon" src="${props.icon}" alt="">
             </button>
         `
-    }
+  }
 }
 
 
 class Tasks {
-    constructor() {
-        this.taskController = new TaskController();
-    }
+  constructor() {
+    this.taskController = new TaskController();
+  }
 }
 
 class Notes {
-    constructor() {
-        const noteController = new NoteController();
-    }
+  constructor() {
+    const noteController = new NoteController();
+  }
 }
 
 
 class NoteController {
-    constructor() {
-        this.$noteStore = document.querySelector('#noteStore');
-        this.init()
+  constructor() {
+    this.$noteStore = document.querySelector('#noteStore');
+    this.init()
 
+  }
+
+  init = () => {
+    if (!this.$noteStore) return;
+    this.model = new NoteModel();
+    this.view = new NoteView(this.$noteStore);
+    this.listeners();
+  }
+
+  sendForm = async (e) => {
+    e.preventDefault()
+    const $form = e.target;
+    const formData = new FormData($form);
+    // this.view.spinner()
+    const res = await this.model.store(formData);
+    if (res.success) {
+      this.successCreate(res.data)
+    } else if (res.error) {
+      this.errorCreate(res.error, $form)
     }
 
-    init = () => {
-        if (!this.$noteStore) return;
-        this.model = new NoteModel();
-        this.view = new NoteView(this.$noteStore);
-        this.listeners();
+  }
+
+  deleteHandler = async ($target) => {
+    const $note = $target.closest('[data-note]');
+    const id = $note.dataset.note;
+
+    const $result = await this.model.delete({id});
+    if ($result.success) {
+      this.successDelete($result)
+    } else if ($result.error) {
+      this.errorDelete($result.error)
     }
 
-    sendForm = async (e) => {
-        e.preventDefault()
-        const $form = e.target;
-        const formData = new FormData($form);
-        // this.view.spinner()
-        const res = await this.model.store(formData);
-        if (res.success) {
-            this.successCreate(res.data)
-        } else if (res.error) {
-            this.errorCreate(res.error, $form)
-        }
+  }
 
+  deleteAllHandler = async () => {
+    const $result = await this.model.deleteAll();
+    console.log($result)
+    if ($result.success) {
+      this.view.clearList()
+    } else if ($result.error) {
+      this.errorDelete($result.error)
     }
 
-    deleteHandler = async ($target) => {
-        const $note = $target.closest('[data-note]');
-        const id = $note.dataset.note;
+  }
+  successCreate = (data) => {
+    this.view.closeMaker();
+    this.view.create(data);
+    this.view.clearForm();
+  }
 
-        const $result = await this.model.delete({id});
-        if ($result.success) {
-            this.successDelete($result)
-        } else if ($result.error) {
-            this.errorDelete($result.error)
-        }
+  errorCreate = (errors, $form) => {
+    this.view.formErrors(errors, $form);
+  }
 
-    }
+  successDelete = (data) => {
+    this.view.deleteNote(data.data.id)
+  }
 
-    deleteAllHandler = async () => {
-        const $result = await this.model.deleteAll();
-        console.log($result)
-        if ($result.success) {
-            this.view.clearList()
-        } else if ($result.error) {
-            this.errorDelete($result.error)
-        }
-
-    }
-    successCreate = (data) => {
-        this.view.closeMaker();
-        this.view.create(data);
-        this.view.clearForm();
-    }
-
-    errorCreate = (errors, $form) => {
-        this.view.formErrors(errors, $form);
-    }
-
-    successDelete = (data) => {
-        this.view.deleteNote(data.data.id)
-    }
-
-    errorDelete = (error) => {
-        console.log(error)
-    }
+  errorDelete = (error) => {
+    console.log(error)
+  }
 
 
-    submitHandler = async (e) => {
-        if (e.target.closest('#noteMaker')) {
-            await this.sendForm(e)
-        }
-
-
-    }
-
-    clickHandler = async (e) => {
-        if (e.target.closest('[data-maker-open]')) {
-            this.view.openMaker();
-        } else if (e.target.closest('[data-maker-close]')) {
-            this.view.closeMaker();
-        } else if (e.target.closest('[data-delete-note]')) {
-            await this.deleteHandler(e.target);
-        } else if (e.target.closest('[data-delete-all]')) {
-            await this.deleteAllHandler();
-        }
-
-        // if(!e.target.closest('#noteMaker') && this.isOpen){
-        //
-        // }
-
+  submitHandler = async (e) => {
+    if (e.target.closest('#noteMaker')) {
+      await this.sendForm(e)
     }
 
 
-    listeners = () => {
+  }
 
-        document.addEventListener('submit', this.submitHandler)
-        document.addEventListener('click', this.clickHandler)
+  clickHandler = async (e) => {
+    if (e.target.closest('[data-maker-open]')) {
+      this.view.openMaker();
+    } else if (e.target.closest('[data-maker-close]')) {
+      this.view.closeMaker();
+    } else if (e.target.closest('[data-delete-note]')) {
+      await this.deleteHandler(e.target);
+    } else if (e.target.closest('[data-delete-all]')) {
+      await this.deleteAllHandler();
     }
+
+    // if(!e.target.closest('#noteMaker') && this.isOpen){
+    //
+    // }
+
+  }
+
+
+  listeners = () => {
+
+    document.addEventListener('submit', this.submitHandler)
+    document.addEventListener('click', this.clickHandler)
+  }
 }
 
 class NoteModel extends Service {
-    constructor() {
-        super();
-        this.base = 'api/notes';
-        this.createApi = this.base + '/store'
-        this.destroyApi = this.base + '/delete'
-        this.destroyAlLApi = this.base + '/delete/all'
-    }
+  constructor() {
+    super();
+    this.base = 'api/notes';
+    this.createApi = this.base + '/store'
+    this.destroyApi = this.base + '/delete'
+    this.destroyAlLApi = this.base + '/delete/all'
+  }
 
-    store = async (data) => {
-        return await this.post(this.createApi, data);
-    }
+  store = async (data) => {
+    return await this.post(this.createApi, data);
+  }
 
-    delete = async (data) => {
-        return await this.destroy(this.destroyApi, data)
-    }
+  delete = async (data) => {
+    return await this.destroy(this.destroyApi, data)
+  }
 
-    deleteAll = async () => {
-        return await this.destroy(this.destroyAlLApi, {});
-    }
+  deleteAll = async () => {
+    return await this.destroy(this.destroyAlLApi, {});
+  }
 
 
 }
 
 class NoteView extends Render {
-    constructor($noteStore) {
-        super();
-        this.$noteStore = $noteStore;
-        this.spinner = spinner;
-        this.init()
-    }
+  constructor($noteStore) {
+    super();
+    this.$noteStore = $noteStore;
+    this.spinner = spinner;
+    this.init()
+  }
 
-    init = () => {
-        this.$maker = document.querySelector('#noteMaker');
-        this.$noteList = document.querySelector('#noteList');
-        this.$input = this.$maker.querySelector('[data-maker-input]');
-        // this.$radioList = this.$maker.querySelectorAll('[data-maker-color]')
-        this.$messages = this.$maker.querySelector('[data-messages]');
-        this.isOpenForm = false;
-
-
-    }
-
-    openMaker = () => {
-        this.$maker.classList.add('open');
-        this.isOpenForm = true;
-        this.$input.focus();
-    }
-
-    closeMaker = () => {
-        this.$maker.classList.remove('open');
-        this.isOpenForm = false;
-    }
-
-    formErrors(errors) {
-        this.clearMessages();
-        this.render(this.$messages, this.getErrorMakerHtml, false, errors)
-    }
-
-    clearMessages = () => {
-        this.clear(this.$messages);
-    }
-
-    clearForm = () => {
-        setTimeout(() => {
-            this.$maker.reset();
-        }, 300);
+  init = () => {
+    this.$maker = document.querySelector('#noteMaker');
+    this.$noteList = document.querySelector('#noteList');
+    this.$input = this.$maker.querySelector('[data-maker-input]');
+    // this.$radioList = this.$maker.querySelectorAll('[data-maker-color]')
+    this.$messages = this.$maker.querySelector('[data-messages]');
+    this.isOpenForm = false;
 
 
-    }
+  }
 
-    clearList = () => {
-        this.clear(this.$noteList);
-    }
+  openMaker = () => {
+    this.$maker.classList.add('open');
+    this.isOpenForm = true;
+    this.$input.focus();
+  }
 
-    deleteNote = (id) => {
-        const $note = this.$noteList.querySelector(`[data-note='${id}']`);
-        this.delete($note);
-    }
+  closeMaker = () => {
+    this.$maker.classList.remove('open');
+    this.isOpenForm = false;
+  }
+
+  formErrors(errors) {
+    this.clearMessages();
+    this.render(this.$messages, this.getErrorMakerHtml, false, errors)
+  }
+
+  clearMessages = () => {
+    this.clear(this.$messages);
+  }
+
+  clearForm = () => {
+    setTimeout(() => {
+      this.$maker.reset();
+    }, 300);
 
 
-    create = (data) => {
-        this.render(this.$noteList, this.getNoteHtml, data, false, 'afterbegin');
-    }
+  }
 
-    getNoteHtml = (data) => {
-        return `
+  clearList = () => {
+    this.clear(this.$noteList);
+  }
+
+  deleteNote = (id) => {
+    const $note = this.$noteList.querySelector(`[data-note='${id}']`);
+    this.delete($note);
+  }
+
+
+  create = (data) => {
+    this.render(this.$noteList, this.getNoteHtml, data, false, 'afterbegin');
+  }
+
+  getNoteHtml = (data) => {
+    return `
              <div data-note="${data.id}" class="note-card ${data.color}">
               <div class="note-card__text">
                   ${data.text}
@@ -573,48 +573,48 @@ class NoteView extends Render {
               </button>
           </div>
         `
-    }
+  }
 
 
-    getErrorMakerHtml = (error) => {
-        return `<p class="note-marker__error">${error}</p>`
-    }
+  getErrorMakerHtml = (error) => {
+    return `<p class="note-marker__error">${error}</p>`
+  }
 
 
 }
 
-class MessageModuleView extends Render{
-    constructor($module) {
-        super();
+class MessageModuleView extends Render {
+  constructor($module) {
+    super();
 
-        this.$module = $module;
-    }
+    this.$module = $module;
+  }
 
-    add = (data) => {
-        this.render(this.$module, this.getMessageHtml, data);
-    }
+  add = (data) => {
+    this.render(this.$module, this.getMessageHtml, data);
+  }
 
-    showMessage = ($message) => {
+  showMessage = ($message) => {
 
-        const $messageInner =  $message.querySelector('[data-inner]');
-        const messageInnerHeight =  $messageInner.getBoundingClientRect().height;
-        $message.style.height = messageInnerHeight + 'px';
+    const $messageInner = $message.querySelector('[data-inner]');
+    const messageInnerHeight = $messageInner.getBoundingClientRect().height;
+    $message.style.height = messageInnerHeight + 'px';
 
-    }
+  }
 
-    hideMessage = ($message) => {
-        $message.style.height = '0';
-        $message.style.opacity = '0';
-    }
+  hideMessage = ($message) => {
+    $message.style.height = '0';
+    $message.style.opacity = '0';
+  }
 
-    delete = ($message) => {
-        setTimeout(() => {
-            this.delete($message);
-        }, 300)
-    }
+  delete = ($message) => {
+    setTimeout(() => {
+      this.delete($message);
+    }, 300)
+  }
 
-    getMessageHtml = () => {
-        return `
+  getMessageHtml = () => {
+    return `
             <div data-message class="message-card success" style="height: 0">
                 <div data-inner class="message-card__inner">
                     <div class="message-card__content">
@@ -629,61 +629,101 @@ class MessageModuleView extends Render{
                 </div>
             </div>
             `
-    }
+  }
 }
-
 
 class MessageModule {
-    constructor() {
-        this.$module = document.querySelector('#messageModule');
-        this.init();
+  constructor() {
+    this.$module = document.querySelector('#messageModule');
+    this.init();
+  }
+
+  init = () => {
+    if (!this.$module) return;
+    this.view = new MessageModuleView(this.$module);
+    this.$add = document.querySelector('#add');
+    this.listeners();
+  }
+
+  addHandler = () => {
+    this.view.add()
+    const $lastMessage = this.$module.lastElementChild;
+    this.view.showMessage($lastMessage);
+    setTimeout(() => {
+      this.deleteHandler($lastMessage)
+    }, 10000);
+  }
+
+
+  deleteHandler = ($message) => {
+    if ($message) {
+      this.view.hideMessage($message);
+      this.view.delete($message)
     }
+  }
 
-    init = () => {
-        if (!this.$module) return;
-        this.view = new MessageModuleView(this.$module);
-        this.$add = document.querySelector('#add');
-        this.listeners();
+
+  clickHandler = (e) => {
+    if (e.target.closest('[data-delete]')) {
+      this.deleteHandler(e.target.closest('[data-message]'));
     }
+  }
 
-    addHandler = () => {
-        this.view.add()
-        const $lastMessage = this.$module.lastElementChild;
-        this.view.showMessage($lastMessage);
-        setTimeout(() => {
-            this.deleteHandler($lastMessage)
-        }, 10000);
-    }
-
-
-
-
-    deleteHandler = ($message) => {
-        if($message){
-            this.view.hideMessage($message);
-            this.view.delete($message)
-        }
-    }
-
-
-    clickHandler = (e) => {
-        if(e.target.closest('[data-delete]')){
-            this.deleteHandler(e.target.closest('[data-message]'));
-        }
-    }
-
-    listeners = () => {
-        this.$module.addEventListener('click', this.clickHandler);
-        this.$add.addEventListener('click', this.addHandler);
-    }
+  listeners = () => {
+    this.$module.addEventListener('click', this.clickHandler);
+    this.$add.addEventListener('click', this.addHandler);
+  }
 }
 
-// const log = new Log();
+class TabSwitcher {
+  constructor(id) {
+
+    this.$tabContainer = document.querySelector(id);
+    this.init()
+  }
+
+  init = () => {
+    if (!this.$tabContainer) return;
+      this.$navItemList = this.$tabContainer.querySelectorAll('[data-tab-link]');
+      this.$tabList = this.$tabContainer.querySelectorAll('[data-tab]');
+      this.listeners()
+  }
+
+  changeActiveTab = ($tabLink) => {
+    this.$tabList.forEach( ($tab) => {
+        $tab.classList.remove('active');
+        if($tab.dataset.tab === $tabLink.dataset.tabLink){
+          $tab.classList.add('active');
+        }
+    });
+  }
+  changeActiveLink = ($tabLink) => {
+    this.$navItemList.forEach( ($item) => {
+      $item.classList.remove('active');
+      if($item.dataset.tabLink === $tabLink.dataset.tabLink){
+        $item.classList.add('active');
+      }
+    });
+  }
+  toggle = ($tabLink) => {
+    this.changeActiveTab($tabLink);
+    this.changeActiveLink($tabLink);
+  }
+  clickHandler = (e) => {
+
+    if(e.target.closest('[data-tab-link]')){
+      this.toggle(e.target.closest('[data-tab-link]'))
+    }
+  }
+  listeners = () => {
+    this.$tabContainer.addEventListener('click', this.clickHandler);
+  }
+}
 const spinner = new Spinner();
 const tasks = new Tasks();
 const notes = new Notes();
-
-const messageModule = new MessageModule()
+const tabSwitcher = new TabSwitcher('#tabContainer');
+const messageModule = new MessageModule();
 
 
 
