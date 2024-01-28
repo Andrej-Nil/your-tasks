@@ -2,7 +2,11 @@
 
 
 $db = \classes\App::get(\classes\Db::class);
+$auth = \classes\App::get(\classes\Auth::class);
 $validator = \classes\App::get(\classes\Validator::class);
+$user = $auth->get();
+
+
 
 $fillable = ['title', 'description', 'deadline'];
 $createDate = date('Y-m-d');
@@ -14,7 +18,7 @@ $values = [
     'active',
     $createDate,
     $data['deadline'] ?: null,
-    $_SESSION['user']['id']
+    $user['id']
 ];
 
 

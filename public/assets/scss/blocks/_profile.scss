@@ -6,7 +6,7 @@
 
 
 .profile__tab{
-  padding: 15px;
+  padding: 15px 15px 40px;
   display: none;
   &.active{
     display: block;
@@ -31,6 +31,9 @@
 
 .profile-block{
   margin-bottom: 40px;
+  &:last-child{
+    margin-bottom: 0;
+  }
 }
 .profile-block__title{
   margin-bottom: 15px;

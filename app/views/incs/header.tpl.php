@@ -31,7 +31,7 @@
                 <div class="header__menu menu nav">
 
                     <?php if(check_auth()): ?>
-                        <a href="profile" class="menu__item nav__item"><?= $_SESSION['user']['name'] ?></a>
+                        <a href="profile" class="menu__item nav__item"><?= $user['name'] ?></a>
                         <a href="logout" class="menu__item nav__item">Выход</a>
                     <?php else: ?>
                         <a href="login" class="menu__item nav__item">Вход</a>

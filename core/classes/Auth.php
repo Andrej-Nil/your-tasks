@@ -28,7 +28,6 @@ class Auth
         return isset($_SESSION['user']);
     }
 
-
     private function getUserData($user) {
         $data = [];
 

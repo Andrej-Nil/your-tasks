@@ -586,7 +586,6 @@ class NoteView extends Render {
 class MessageModuleView extends Render {
   constructor($module) {
     super();
-
     this.$module = $module;
   }
 
@@ -595,7 +594,6 @@ class MessageModuleView extends Render {
   }
 
   showMessage = ($message) => {
-
     const $messageInner = $message.querySelector('[data-inner]');
     const messageInnerHeight = $messageInner.getBoundingClientRect().height;
     $message.style.height = messageInnerHeight + 'px';
@@ -607,7 +605,7 @@ class MessageModuleView extends Render {
     $message.style.opacity = '0';
   }
 
-  delete = ($message) => {
+  deleteMessage = ($message) => {
     setTimeout(() => {
       this.delete($message);
     }, 300)
@@ -649,16 +647,17 @@ class MessageModule {
     this.view.add()
     const $lastMessage = this.$module.lastElementChild;
     this.view.showMessage($lastMessage);
-    setTimeout(() => {
-      this.deleteHandler($lastMessage)
-    }, 10000);
+    // setTimeout(() => {
+    //   this.deleteHandler($lastMessage)
+    // }, 4000);
   }
 
 
   deleteHandler = ($message) => {
     if ($message) {
+
       this.view.hideMessage($message);
-      this.view.delete($message)
+      this.view.deleteMessage($message)
     }
   }
 

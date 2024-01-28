@@ -1,11 +1,13 @@
 <?php
 
 $db = \classes\App::get(\classes\Db::class);
+$auth = \classes\App::get(\classes\Auth::class);
 
 $validator = \classes\App::get(\classes\Validator::class);
 $fillable = ['title', 'description', 'deadline', 'id'];
+$user = $auth->get();
 $data = load($fillable);
-$task = $db->query("SELECT * FROM tasks WHERE id=? LIMIT 1", [$data['id']])->findOrFail();
+$task = $db->query("SELECT * FROM tasks WHERE id=? AND user_id=? LIMIT 1", [$data['id'], $user['id']])->findOrFail();
 
 
 $validation = $validator->validate($data, [

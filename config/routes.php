@@ -42,8 +42,7 @@ $router->get('login', 'user/login.php')->only('guest');
 $router->post('login', 'user/login.php')->only('guest');
 $router->get('logout', 'user/logout.php')->only('auth');
 $router->get('profile', 'user/profile.php')->only('auth');
-
-
+$router->delete('user/delete', 'user/destroy.php')->only('auth');
 
 
 
