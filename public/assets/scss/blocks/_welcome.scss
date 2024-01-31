@@ -24,8 +24,14 @@
 }
 
 .welcome__controls{
+  flex-direction: column;
   display: flex;
   justify-content: space-between;
+  gap: 15px;
+  @media (min-width: 420px) {
+    flex-direction: row;
+  }
+
 }
 
 .welcome__call{

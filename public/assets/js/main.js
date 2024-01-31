@@ -670,7 +670,7 @@ class MessageModule {
 
   listeners = () => {
     this.$module.addEventListener('click', this.clickHandler);
-    this.$add.addEventListener('click', this.addHandler);
+    // this.$add.addEventListener('click', this.addHandler);
   }
 }
 

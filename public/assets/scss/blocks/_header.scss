@@ -10,6 +10,12 @@
   gap: 30px;
   padding: 10px 0;
 }
+.header__nav{
+  display: none;
+  @media (min-width: 1080px) {
+    display: block;
+  }
+}
 
 .header__menu{
   margin-left: auto;

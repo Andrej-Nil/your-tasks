@@ -1,6 +1,6 @@
 <?php require VIEWS . '/incs/header.tpl.php' ?>
 
-      <div class="wrapper container">
+      <div class="wrapper container dn">
           <h1 class="main-title">Активные задачи</h1>
 
           <div class="content">
@@ -23,8 +23,6 @@
                   </div>
 
                 <?php endif; ?>
-
-
 
 
 
