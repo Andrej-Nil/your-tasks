@@ -1,7 +1,14 @@
 <div data-task="<?= $task['id'] ?>" class="task-card <?= getTaskStatusCls($task) ?>">
         <div class="task-card__top">
               <p class="task-card__data">от <?= $task['date_creating'] ?></p>
+          <span class="task-card__option btn-option">
+            <span class="btn-option__dote"></span>
+            <span class="btn-option__dote"></span>
+            <span class="btn-option__dote"></span>
+          </span>
         </div>
+
+
       <a href="/tasks/show?id=<?= $task['id'] ?>" class="task-card__link">
             <p class="task-card__title">
               <?= $task['title'] ?>

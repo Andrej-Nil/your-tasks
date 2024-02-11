@@ -14,7 +14,7 @@
                 <img src="<?= IMG . '/icons/plus.svg' ?>" alt="" class="mobile-menu__icon">
             </a>
 
-            <a href="/tasks/index" class="mobile-menu__item">
+            <a href="/tasks" class="mobile-menu__item">
                 <img src="<?= IMG . '/icons/list.svg' ?>" alt="" class="mobile-menu__icon">
             </a>
             <span class="mobile-menu__item">

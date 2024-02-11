@@ -13,7 +13,7 @@
 .header__nav{
   display: none;
   @media (min-width: 1080px) {
-    display: block;
+    display: flex;
   }
 }
 

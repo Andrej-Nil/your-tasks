@@ -22,8 +22,6 @@ $values = [
 ];
 
 
-
-
 $validation = $validator->validate($data, [
     "title" => [
         'required' => true,

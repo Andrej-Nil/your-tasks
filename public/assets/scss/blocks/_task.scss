@@ -4,6 +4,8 @@
   background: #fff;
   border-radius: 5px;
   transition: 0.3s ease-in-out;
+
+
   &.overdue{
     background: #ffcccc;
   }
@@ -19,6 +21,9 @@
   &.cancelled{
     background: #cccccc;
   }
+
+
+
 }
 
 .task__title{

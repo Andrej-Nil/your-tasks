@@ -1,12 +1,12 @@
 
 .mobile-menu{
   position: fixed;
-  background: #f5f5f5;
+  background: #f0f0f0;
   bottom: 0;
   left: 0;
   right: 0;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-
+z-index: 11;
   @media (min-width: 1080px) {
     display: none;
   }
@@ -26,8 +26,8 @@
 }
 
 .mobile-menu__item{
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
 }
 
 .mobile-menu__icon{

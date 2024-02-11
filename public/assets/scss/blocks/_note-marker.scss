@@ -51,11 +51,23 @@
 .note-marker__controls{
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
+  gap: 20px;
+  @media (min-width: 1280px) {
+    flex-direction: row;
+    gap: 20px;
+  }
 }
 
 .note-marker__colors{
   display: flex;
+  justify-content: space-between;
   gap: 10px;
+  @media (min-width: 1280px) {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 20px;
+  }
 }
 
 .note-marker__btn{

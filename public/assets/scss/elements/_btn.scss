@@ -82,3 +82,20 @@
   height: 100%;
 }
 
+.btn-option{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.btn-option__dote{
+  display: block;
+  background: #222222;
+  width: 4px;
+  height: 4px;
+}
+

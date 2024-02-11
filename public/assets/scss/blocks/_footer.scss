@@ -1,10 +1,14 @@
 .footer{
-  margin-top: 30px;
+  margin: 30px 0 0 0;
   background: #fff;
+  padding-bottom: 44px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  @media (min-width: 1080px) {
+    padding-bottom: 0;
+  }
+
 }
 .footer__inner{
-
   padding: 10px 0;
 }
 
